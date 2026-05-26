@@ -120,3 +120,218 @@ Uma User Story é considerada pronta quando:
 ### Riscos:
 * Integração WhatsApp (EP-06) é a parte mais complexa e instável — priorizar POC no início da Sprint 3.
 * Busca inteligente (US-03) pode exigir ajuste fino — reservar tempo para refinamento.
+
+
+
+# Sprint Planning — Sprint 1
+
+## Informações Gerais
+
+**Projeto:** E-commerce + Chatbot WhatsApp  
+**Sprint:** Sprint 1  
+**Duração:** 2 semanas  
+**Objetivo da Sprint:** Desenvolver a base funcional do catálogo de produtos e do carrinho de compras, permitindo navegação, busca e importação inicial de produtos.
+
+---
+
+## Objetivo da Sprint
+
+A Sprint 1 tem como foco a construção do **MVP inicial do e-commerce**, entregando funcionalidades essenciais para que o cliente consiga visualizar produtos, pesquisar itens e iniciar o processo de compra através do carrinho.
+
+### Funcionalidades Prioritárias
+- Importação de produtos via Excel
+- Página de produto
+- Busca inteligente de produtos
+- Carrinho de compras funcional
+
+---
+
+## User Stories Selecionadas
+
+| ID | User Story | Prioridade | Esforço |
+|----|------------|------------|----------|
+| US-01 | Como admin, quero importar produtos do Excel para não precisar cadastrar tudo manualmente | Alta | 8 pts |
+| US-02 | Como cliente, quero ver foto, preço e descrição do produto para decidir a compra | Alta | 5 pts |
+| US-03 | Como cliente, quero buscar produtos e receber sugestões similares para não desistir da compra | Alta | 8 pts |
+| US-05 | Como cliente, quero adicionar produtos ao carrinho e revisar antes de comprar | Alta | 5 pts |
+
+**Total da Sprint:** **26 Story Points**
+
+---
+
+## Planejamento das Tasks
+
+### Nicolas
+Responsável pela funcionalidade de importação de produtos.
+
+| Task ID | Descrição | Story |
+|----------|------------|--------|
+| T1 | Implementar backend da importação de produtos via Excel (.xlsx) | US-01 |
+| T2 | Desenvolver validações e mapeamento das colunas do Excel | US-01 |
+| T3 (TDD) | Criar testes unitários da importação | US-01 |
+
+### Bruna
+Responsável pela página de produto.
+
+| Task ID | Descrição | Story |
+|----------|------------|--------|
+| T4 | Criar interface da página do produto | US-02 |
+| T5 | Implementar galeria de imagens e atualização de estoque | US-02 |
+| T6 (TDD) | Criar testes unitários dos componentes da página | US-02 |
+
+### Bruno
+Responsável pela busca inteligente.
+
+| Task ID | Descrição | Story |
+|----------|------------|--------|
+| T7 | Desenvolver sistema de busca textual | US-03 |
+| T8 | Implementar sugestão de produtos similares | US-03 |
+| T9 (TDD) | Criar testes unitários da busca | US-03 |
+
+### Suelen
+Responsável pelo carrinho de compras.
+
+| Task ID | Descrição | Story |
+|----------|------------|--------|
+| T10 | Implementar adicionar/remover itens do carrinho | US-05 |
+| T11 | Criar persistência do carrinho e subtotal | US-05 |
+| T12 (TDD) | Criar testes unitários do carrinho | US-05 |
+
+---
+
+## Estratégia de Desenvolvimento
+
+A equipe adotará **TDD (Test-Driven Development)** durante toda a sprint.
+
+### Fluxo de trabalho:
+1. **Red** → escrever o teste antes da implementação.  
+2. **Green** → desenvolver o mínimo necessário para passar no teste.  
+3. **Refactor** → melhorar o código mantendo os testes aprovados.
+
+---
+
+## Capacidade da Equipe
+
+| Desenvolvedor | Quantidade de Tasks |
+|----------------|---------------------|
+| Nicolas | 3 |
+| Bruna | 3 |
+| Bruno | 3 |
+| Suelen | 3 |
+
+**Total de Tasks:** **12**
+
+Distribuição equilibrada para garantir paralelismo no desenvolvimento e reduzir gargalos.
+
+---
+
+## Riscos Identificados
+
+### R1 — Problemas na importação do Excel
+**Impacto:** Alto  
+**Mitigação:** Criar validações de formato e testes unitários.
+
+### R2 — Busca retornar poucos resultados relevantes
+**Impacto:** Médio  
+**Mitigação:** Implementar sugestões similares como fallback.
+
+### R3 — Persistência do carrinho apresentar inconsistências
+**Impacto:** Médio  
+**Mitigação:** Criar testes cobrindo fluxo completo do carrinho.
+
+---
+
+## Critérios de Sucesso da Sprint
+
+A Sprint 1 será considerada bem-sucedida se:
+
+- [x] Produtos forem importados corretamente via Excel  
+- [x] Página do produto estiver funcional  
+- [x] Busca retornar produtos e sugestões similares  
+- [x] Carrinho permitir adicionar/remover itens  
+- [x] Subtotal for calculado corretamente  
+- [x] Todos os testes unitários estiverem aprovados  
+- [x] Código integrado sem erros críticos
+
+---
+
+## Entrega Esperada
+
+Ao final da Sprint 1, será entregue um **catálogo navegável com busca e carrinho funcional**, formando a base do MVP do e-commerce.
+
+
+
+# Sprint Backlog — Sprint 1
+
+## Objetivo da Sprint
+Entregar a base funcional do catálogo e carrinho do e-commerce, incluindo:
+
+- Importação de produtos via Excel
+- Página de produto funcional
+- Busca de produtos com sugestões
+- Carrinho de compras funcional
+
+**User Stories da Sprint:**
+- US-01 — Importação de produtos via Excel
+- US-02 — Página de produto
+- US-03 — Busca inteligente
+- US-05 — Carrinho de compras
+
+---
+
+## Distribuição das Tasks
+
+| Dev | Task ID | Task | User Story |
+|------|---------|------|-------------|
+| Nicolas | T1 | Implementar backend da importação de produtos via Excel (.xlsx), incluindo leitura do arquivo e persistência no banco | US-01 |
+| Nicolas | T2 | Criar lógica de mapeamento de colunas do Excel (nome, preço, estoque e imagem) e validações da importação | US-01 |
+| Nicolas | T3 (TDD) | Criar testes unitários da importação de Excel (arquivo válido, inválido e validação de campos obrigatórios) | US-01 |
+| Bruna | T4 | Desenvolver interface da página do produto (imagem, descrição, preço e disponibilidade) | US-02 |
+| Bruna | T5 | Implementar galeria de imagens e atualização dinâmica do estoque na tela do produto | US-02 |
+| Bruna | T6 (TDD) | Criar testes unitários dos componentes da página do produto e renderização de dados | US-02 |
+| Bruno | T7 | Desenvolver sistema de busca textual de produtos no catálogo | US-03 |
+| Bruno | T8 | Implementar sugestão de produtos similares quando não houver resultado na busca | US-03 |
+| Bruno | T9 (TDD) | Criar testes unitários da busca (produto encontrado, não encontrado e sugestões similares) | US-03 |
+| Suelen | T10 | Implementar funcionalidade do carrinho (adicionar, remover e alterar quantidade de produtos) | US-05 |
+| Suelen | T11 | Desenvolver persistência do carrinho e cálculo automático do subtotal | US-05 |
+| Suelen | T12 (TDD) | Criar testes unitários do carrinho (adição, remoção, persistência e subtotal) | US-05 |
+
+---
+
+## Estratégia de Desenvolvimento — TDD
+
+A sprint seguirá o modelo **TDD (Test-Driven Development)**:
+
+### 1. Red
+Criar o teste unitário antes da implementação da funcionalidade.
+
+### 2. Green
+Implementar o mínimo necessário para que o teste passe.
+
+### 3. Refactor
+Refatorar o código mantendo todos os testes funcionando.
+
+---
+
+## Critérios de Pronto (Definition of Done)
+
+Uma task será considerada concluída quando:
+
+- Funcionalidade implementada
+- Testes unitários criados e aprovados
+- Código revisado pela equipe
+- Sem erros críticos
+- Integrado à branch principal
+- Critérios de aceite da User Story atendidos
+
+---
+
+## Entrega Esperada da Sprint 1
+
+Ao final da Sprint 1 o sistema deverá possuir:
+
+✅ Importação de produtos via Excel funcionando  
+✅ Catálogo navegável com página de produto  
+✅ Busca de produtos com sugestões similares  
+✅ Carrinho funcional com subtotal automático  
+✅ Testes unitários implementados seguindo TDD  
