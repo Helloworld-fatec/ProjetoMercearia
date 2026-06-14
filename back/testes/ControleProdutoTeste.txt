@@ -1,0 +1,2 @@
+DeveRetornarNomeProdutoEstaOk(ValidarNomeProduto("Café"));
+DeveRetornarNomeProdutoEstaErrado(ValidarNomeProduto("   "));

@@ -1,0 +1,14 @@
+CriarNovoUsuario(usuario, email, senha){
+	if(!ValidarEmail(email))
+		return erro;
+	if(!ValidarForcaSenha(senha))
+		return erro;
+	CriarNovoUsuarioRepositorio(usuario, email, senha);
+
+
+}
+Logar(usuario, senha){
+	var usuario = BuscarUsuario();
+	if(usuario == null)
+		return erro;
+}

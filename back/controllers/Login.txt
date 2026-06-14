@@ -1,0 +1,2 @@
+RotaCriarNovoUsuario(usaurio, senha, email);
+RotaLogar(usuario, senha);

@@ -1,0 +1,4 @@
+DeveRetornarEmailCorreto(ValidarEmail("teste@teste.com"));
+DeveRetornarEmailErrado(ValidarEmail("teste"));
+DeveRetornarSenhaCorreta(ValidarForcaSenha("%!8687gggTT"));
+DeveRetornarSenhaIncorreta(ValidarForcaSenha("senha123"));
