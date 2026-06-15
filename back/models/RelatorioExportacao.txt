@@ -1,0 +1,10 @@
+// back/models/RelatorioExportacao
+
+RelatorioExportacao {
+    tipo;
+    formato;
+    dataInicio;
+    dataFim;
+    dataGeracao;
+    arquivo;
+}

@@ -1,0 +1,5 @@
+// back/routes/ExportacaoRelatorioRoute
+
+RotaExportarRelatorioVendas(dataInicio, dataFim, formato);
+RotaExportarRelatorioEstoque(formato);
+RotaExportarRelatorioDespesas(dataInicio, dataFim, formato);

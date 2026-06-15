@@ -1,0 +1,102 @@
+// back/controllers/ExportacaoRelatorioController
+
+ExportarRelatorioVendas(dataInicio, dataFim, formato){
+    if(dataInicio == null || dataFim == null)
+        return erro;
+    if(dataInicio > dataFim)
+        return erro;
+    if(!ValidarFormatoExportacao(formato))
+        return erro;
+    var vendas = BuscarVendasPorPeriodoRepositorio(dataInicio, dataFim);
+    if(vendas == null || vendas.tamanho == 0)
+        return erro;
+    var faturamento = CalcularFaturamento(vendas, dataInicio);
+    var relatorio = MontarRelatorioVendas(vendas, faturamento, dataInicio, dataFim);
+    return GerarArquivo(relatorio, formato, "relatorio_vendas");
+}
+
+ExportarRelatorioEstoque(formato){
+    if(!ValidarFormatoExportacao(formato))
+        return erro;
+    var produtos = ListarProdutosRepositorio();
+    if(produtos == null || produtos.tamanho == 0)
+        return erro;
+    var relatorio = MontarRelatorioEstoque(produtos);
+    return GerarArquivo(relatorio, formato, "relatorio_estoque");
+}
+
+ExportarRelatorioDespesas(dataInicio, dataFim, formato){
+    if(dataInicio == null || dataFim == null)
+        return erro;
+    if(dataInicio > dataFim)
+        return erro;
+    if(!ValidarFormatoExportacao(formato))
+        return erro;
+    var despesas = BuscarDespesasPorPeriodoRepositorio(dataInicio, dataFim);
+    if(despesas == null || despesas.tamanho == 0)
+        return erro;
+    var relatorio = MontarRelatorioDespesas(despesas, dataInicio, dataFim);
+    return GerarArquivo(relatorio, formato, "relatorio_despesas");
+}
+
+MontarRelatorioVendas(vendas, faturamento, dataInicio, dataFim){
+    var relatorio = RelatorioExportacao {};
+    relatorio.tipo = "vendas";
+    relatorio.dataInicio = dataInicio;
+    relatorio.dataFim = dataFim;
+    relatorio.dataGeracao = ObterDataHoraAtual();
+    relatorio.dados = {};
+    relatorio.dados.vendas = vendas;
+    relatorio.dados.totalGeral = faturamento.totalGeral;
+    relatorio.dados.quantidadeVendas = faturamento.quantidadeVendas;
+    relatorio.dados.totalPorFormaPagamento = faturamento.totalPorFormaPagamento;
+    return relatorio;
+}
+
+MontarRelatorioEstoque(produtos){
+    var relatorio = RelatorioExportacao {};
+    relatorio.tipo = "estoque";
+    relatorio.dataGeracao = ObterDataHoraAtual();
+    relatorio.dados = {};
+    relatorio.dados.produtos = produtos;
+    relatorio.dados.totalProdutos = produtos.tamanho;
+    return relatorio;
+}
+
+MontarRelatorioDespesas(despesas, dataInicio, dataFim){
+    var relatorio = RelatorioExportacao {};
+    relatorio.tipo = "despesas";
+    relatorio.dataInicio = dataInicio;
+    relatorio.dataFim = dataFim;
+    relatorio.dataGeracao = ObterDataHoraAtual();
+    relatorio.dados = {};
+    relatorio.dados.despesas = despesas;
+    relatorio.dados.totalDespesas = SomarDespesas(despesas);
+    return relatorio;
+}
+
+GerarArquivo(relatorio, formato, nomeBase){
+    relatorio.formato = formato;
+    if(formato == "pdf")
+        relatorio.arquivo = GerarPDF(relatorio);
+        return relatorio;
+    if(formato == "excel")
+        relatorio.arquivo = GerarExcel(relatorio);
+        return relatorio;
+    return erro;
+}
+
+SomarDespesas(despesas){
+    var total = 0;
+    para cada despesa em despesas:
+        total = total + despesa.valor;
+    return total;
+}
+
+ValidarFormatoExportacao(formato){
+    if(formato == null || formato == "")
+        return false;
+    if(formato != "pdf" && formato != "excel")
+        return false;
+    return true;
+}
