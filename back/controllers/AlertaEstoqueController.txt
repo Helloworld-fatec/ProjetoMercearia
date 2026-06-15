@@ -1,0 +1,45 @@
+// back/controllers/AlertaEstoqueController
+
+VerificarAlertaEstoqueMinimo(produto){
+    if(produto == null)
+        return erro;
+    if(produto.quantidade <= produto.estoqueMinimo)
+        DispararAlertaEstoqueBaixo(produto);
+        return true;
+    return false;
+}
+
+DispararAlertaEstoqueBaixo(produto){
+    var alertaExistente = BuscarAlertaAtivoRepositorio(produto.id);
+    if(alertaExistente != null)
+        return;
+    var alerta = Alerta {};
+    alerta.produtoId = produto.id;
+    alerta.nomeProduto = produto.nome;
+    alerta.quantidadeAtual = produto.quantidade;
+    alerta.estoqueMinimo = produto.estoqueMinimo;
+    alerta.tipo = "estoque_baixo";
+    alerta.status = "ativo";
+    alerta.dataHora = ObterDataHoraAtual();
+    SalvarAlertaRepositorio(alerta);
+}
+
+ListarAlertasAtivos(){
+    var alertas = ListarAlertasPorStatusRepositorio("ativo");
+    if(alertas == null)
+        return listaVazia;
+    return alertas;
+}
+
+ResolverAlerta(alertaId){
+    if(alertaId == null)
+        return erro;
+    var alerta = BuscarAlertaRepositorio(alertaId);
+    if(alerta == null)
+        return erro;
+    if(alerta.status == "resolvido")
+        return erro;
+    alerta.status = "resolvido";
+    AtualizarAlertaRepositorio(alerta);
+    return alerta;
+}
