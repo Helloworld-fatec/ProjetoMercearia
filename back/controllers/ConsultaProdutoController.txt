@@ -1,0 +1,26 @@
+// back/controllers/ConsultaProdutoController
+
+ListarProdutos(){
+    var produtos = ListarProdutosRepositorio();
+    if(produtos == null)
+        return erro;
+    return produtos;
+}
+
+BuscarProdutoPorNome(nome){
+    if(nome == null || nome == "")
+        return erro;
+    var produto = BuscarProdutoPorNomeRepositorio(nome);
+    if(produto == null)
+        return erro;
+    return produto;
+}
+
+BuscarProdutoPorCategoria(categoria){
+    if(categoria == null || categoria == "")
+        return erro;
+    var produtos = BuscarProdutoPorCategoriaRepositorio(categoria);
+    if(produtos == null)
+        return erro;
+    return produtos;
+}

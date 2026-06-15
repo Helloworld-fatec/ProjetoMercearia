@@ -1,0 +1,5 @@
+// back/routes/ConsultaProdutoRoute
+
+RotaListarProdutos();
+RotaBuscarProdutoPorNome(nome);
+RotaBuscarProdutoPorCategoria(categoria);
