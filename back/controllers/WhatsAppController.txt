@@ -1,0 +1,58 @@
+// back/controllers/WhatsAppController
+
+ReceberMensagem(mensagem){
+    if(mensagem == null)
+        return erro;
+    if(mensagem.telefoneRemetente == null || mensagem.conteudo == null)
+        return erro;
+    mensagem.dataHora = ObterDataHoraAtual();
+    mensagem.status = "recebida";
+    SalvarMensagemRepositorio(mensagem);
+    var resposta = ProcessarMensagem(mensagem);
+    if(resposta != null)
+        EnviarMensagemWhatsApp(resposta);
+    return resposta;
+}
+
+ProcessarMensagem(mensagem){
+    var intencao = IdentificarIntencao(mensagem.conteudo);
+    if(intencao == "saudacao")
+        return MontarRespostaSaudacao(mensagem);
+    if(intencao == "consulta_produto")
+        return MontarRespostaConsultaProduto(mensagem);
+    if(intencao == "horario")
+        return MontarRespostaHorario(mensagem);
+    if(intencao == "localizacao")
+        return MontarRespostaLocalizacao(mensagem);
+    if(intencao == "falar_vendedor")
+        return MontarRespostaHandoff(mensagem);
+    return MontarRespostaPadrao(mensagem);
+}
+
+IdentificarIntencao(conteudo){
+    var texto = NormalizarTexto(conteudo);
+    if(texto == "oi" || texto == "ola" || texto == "bom dia" || texto == "boa tarde" || texto == "boa noite")
+        return "saudacao";
+    if(ContemPalavra(texto, "produto") || ContemPalavra(texto, "tem") || ContemPalavra(texto, "vende") || ContemPalavra(texto, "preco") || ContemPalavra(texto, "valor"))
+        return "consulta_produto";
+    if(ContemPalavra(texto, "horario") || ContemPalavra(texto, "abre") || ContemPalavra(texto, "fecha") || ContemPalavra(texto, "funcionamento"))
+        return "horario";
+    if(ContemPalavra(texto, "endereco") || ContemPalavra(texto, "onde") || ContemPalavra(texto, "localizacao") || ContemPalavra(texto, "fica"))
+        return "localizacao";
+    if(ContemPalavra(texto, "vendedor") || ContemPalavra(texto, "atendente") || ContemPalavra(texto, "humano") || ContemPalavra(texto, "pessoa"))
+        return "falar_vendedor";
+    return "nao_identificado";
+}
+
+NormalizarTexto(texto){
+    return texto.toLowerCase().removerAcentos().trim();
+}
+
+EnviarMensagemWhatsApp(resposta){
+    if(resposta == null)
+        return erro;
+    ChamarAPIWhatsApp(resposta.telefoneDestino, resposta.conteudo);
+    resposta.dataHora = ObterDataHoraAtual();
+    SalvarRespostaRepositorio(resposta);
+    return resposta;
+}
