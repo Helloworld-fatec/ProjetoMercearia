@@ -1,0 +1,103 @@
+// back/controllers/RespostaAutomaticaController
+
+MontarRespostaSaudacao(mensagem){
+    var conteudo = BuscarRespostaAutomatica("saudacao");
+    if(conteudo == null)
+        conteudo = "Olá! Bem-vindo. Como posso te ajudar?";
+    return MontarResposta(mensagem, conteudo, "automatica");
+}
+
+MontarRespostaConsultaProduto(mensagem){
+    var nomeProduto = ExtrairNomeProduto(mensagem.conteudo);
+    if(nomeProduto != null)
+        var produto = BuscarProdutoPorNomeRepositorio(nomeProduto);
+        if(produto != null)
+            var conteudo = "Sim, temos " + produto.nome + " disponível. Quantidade: " + produto.quantidade + ". Preço: R$ " + produto.preco + ".";
+            return MontarResposta(mensagem, conteudo, "automatica");
+        var conteudo = "Não encontramos o produto '" + nomeProduto + "' no estoque no momento.";
+        return MontarResposta(mensagem, conteudo, "automatica");
+    var conteudo = BuscarRespostaAutomatica("consulta_produto_generica");
+    if(conteudo == null)
+        conteudo = "Qual produto você está procurando? Me informe o nome e verifico o estoque pra você!";
+    return MontarResposta(mensagem, conteudo, "automatica");
+}
+
+MontarRespostaHorario(mensagem){
+    var conteudo = BuscarRespostaAutomatica("horario");
+    if(conteudo == null)
+        conteudo = "Nosso horário de funcionamento é de segunda a sexta das 8h às 18h, e sábados das 8h às 13h.";
+    return MontarResposta(mensagem, conteudo, "automatica");
+}
+
+MontarRespostaLocalizacao(mensagem){
+    var conteudo = BuscarRespostaAutomatica("localizacao");
+    if(conteudo == null)
+        conteudo = "Estamos localizados na Rua Principal, 123. Qualquer dúvida, é só perguntar!";
+    return MontarResposta(mensagem, conteudo, "automatica");
+}
+
+MontarRespostaHandoff(mensagem){
+    var conteudo = BuscarRespostaAutomatica("handoff");
+    if(conteudo == null)
+        conteudo = "Vou te conectar com um de nossos atendentes. Por favor, aguarde um momento!";
+    NotificarVendedor(mensagem);
+    return MontarResposta(mensagem, conteudo, "handoff");
+}
+
+MontarRespostaPadrao(mensagem){
+    var conteudo = BuscarRespostaAutomatica("padrao");
+    if(conteudo == null)
+        conteudo = "Não entendi sua mensagem. Você pode perguntar sobre produtos, horários, localização ou falar com um atendente.";
+    return MontarResposta(mensagem, conteudo, "automatica");
+}
+
+MontarResposta(mensagem, conteudo, tipo){
+    var resposta = RespostaChatbot {};
+    resposta.mensagemOriginalId = mensagem.id;
+    resposta.telefoneDestino = mensagem.telefoneRemetente;
+    resposta.conteudo = conteudo;
+    resposta.tipo = tipo;
+    return resposta;
+}
+
+ExtrairNomeProduto(conteudo){
+    var texto = NormalizarTexto(conteudo);
+    var produtos = ListarProdutosRepositorio();
+    para cada produto em produtos:
+        if(ContemPalavra(texto, NormalizarTexto(produto.nome)))
+            return produto.nome;
+    return null;
+}
+
+NotificarVendedor(mensagem){
+    var notificacao = Notificacao {};
+    notificacao.tipo = "handoff_solicitado";
+    notificacao.telefoneCliente = mensagem.telefoneRemetente;
+    notificacao.nomeCliente = mensagem.nomeRemetente;
+    notificacao.ultimaMensagem = mensagem.conteudo;
+    notificacao.dataHora = ObterDataHoraAtual();
+    SalvarNotificacaoRepositorio(notificacao);
+}
+
+BuscarRespostaAutomatica(chave){
+    var resposta = BuscarRespostaAutomaticaPorChaveRepositorio(chave);
+    if(resposta == null || !resposta.ativo)
+        return null;
+    return resposta.conteudo;
+}
+
+ListarRespostasAutomaticas(){
+    return ListarRespostasAutomaticasRepositorio();
+}
+
+AtualizarRespostaAutomatica(id, conteudo, ativo){
+    if(id == null)
+        return erro;
+    var resposta = BuscarRespostaAutomaticaRepositorio(id);
+    if(resposta == null)
+        return erro;
+    resposta.conteudo = conteudo;
+    resposta.ativo = ativo;
+    AtualizarRespostaAutomaticaRepositorio(resposta);
+    return resposta;
+}

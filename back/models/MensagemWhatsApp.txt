@@ -1,0 +1,19 @@
+// back/models/MensagemWhatsApp
+
+MensagemWhatsApp {
+    id;
+    telefoneRemetente;
+    nomeRemetente;
+    conteudo;
+    dataHora;
+    tipo;
+    status;
+}
+
+RespostaChatbot {
+    mensagemOriginalId;
+    telefoneDestino;
+    conteudo;
+    tipo;
+    dataHora;
+}

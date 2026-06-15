@@ -1,0 +1,4 @@
+// back/routes/WhatsAppRoute
+
+RotaReceberMensagemWhatsApp(mensagem);
+RotaListarMensagensRecebidas(telefone);
