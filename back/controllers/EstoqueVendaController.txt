@@ -1,0 +1,45 @@
+// back/controllers/EstoqueVendaController
+
+AtualizarEstoqueAoVender(itens){
+    para cada item em itens:
+        var produto = BuscarProdutoPorIdRepositorio(item.produtoId);
+        if(produto == null)
+            return erro;
+        if(!ValidarEstoqueDisponivel(produto, item.quantidade))
+            return erro;
+        produto.quantidade = produto.quantidade - item.quantidade;
+        AtualizarProdutoRepositorio(produto);
+        VerificarAlertaEstoqueMinimo(produto);
+}
+
+ValidarEstoqueDisponivel(produto, quantidadeDesejada){
+    if(produto.quantidade <= 0)
+        return false;
+    if(produto.quantidade < quantidadeDesejada)
+        return false;
+    return true;
+}
+
+VerificarAlertaEstoqueMinimo(produto){
+    if(produto.quantidade <= produto.estoqueMinimo)
+        DispararAlertaEstoqueBaixo(produto);
+}
+
+DispararAlertaEstoqueBaixo(produto){
+    var alerta = Alerta {};
+    alerta.produtoId = produto.id;
+    alerta.nomeProduto = produto.nome;
+    alerta.quantidadeAtual = produto.quantidade;
+    alerta.estoqueMinimo = produto.estoqueMinimo;
+    alerta.tipo = "estoque_baixo";
+    SalvarAlertaRepositorio(alerta);
+}
+
+EstornarEstoque(itens){
+    para cada item em itens:
+        var produto = BuscarProdutoPorIdRepositorio(item.produtoId);
+        if(produto == null)
+            return erro;
+        produto.quantidade = produto.quantidade + item.quantidade;
+        AtualizarProdutoRepositorio(produto);
+}
