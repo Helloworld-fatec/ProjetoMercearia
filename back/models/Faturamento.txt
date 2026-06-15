@@ -1,0 +1,14 @@
+// back/models/Faturamento
+
+Faturamento {
+    data;
+    totalGeral;
+    totalPorFormaPagamento[];
+    quantidadeVendas;
+}
+
+TotalPorFormaPagamento {
+    formaPagamento;
+    total;
+    quantidadeVendas;
+}

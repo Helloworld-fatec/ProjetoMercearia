@@ -1,0 +1,58 @@
+// back/controllers/FaturamentoController
+
+BuscarFaturamentoDiario(data){
+    if(data == null)
+        data = ObterDataAtual();
+    var vendas = BuscarVendasPorDataRepositorio(data);
+    if(vendas == null || vendas.tamanho == 0)
+        return FaturamentoVazio(data);
+    var faturamento = CalcularFaturamento(vendas, data);
+    return faturamento;
+}
+
+CalcularFaturamento(vendas, data){
+    var faturamento = Faturamento {};
+    faturamento.data = data;
+    faturamento.quantidadeVendas = 0;
+    faturamento.totalGeral = 0;
+    faturamento.totalPorFormaPagamento = [];
+    para cada venda em vendas:
+        if(venda.status == "cancelada")
+            continue;
+        faturamento.totalGeral = faturamento.totalGeral + venda.totalLiquido;
+        faturamento.quantidadeVendas = faturamento.quantidadeVendas + 1;
+        AcumularPorFormaPagamento(faturamento, venda.formaPagamento, venda.totalLiquido);
+    return faturamento;
+}
+
+AcumularPorFormaPagamento(faturamento, formaPagamento, valor){
+    var registro = BuscarRegistroPorFormaPagamento(faturamento.totalPorFormaPagamento, formaPagamento);
+    if(registro == null)
+        registro = TotalPorFormaPagamento {};
+        registro.formaPagamento = formaPagamento;
+        registro.total = 0;
+        registro.quantidadeVendas = 0;
+        faturamento.totalPorFormaPagamento.adicionar(registro);
+    registro.total = registro.total + valor;
+    registro.quantidadeVendas = registro.quantidadeVendas + 1;
+}
+
+FaturamentoVazio(data){
+    var faturamento = Faturamento {};
+    faturamento.data = data;
+    faturamento.totalGeral = 0;
+    faturamento.quantidadeVendas = 0;
+    faturamento.totalPorFormaPagamento = [];
+    return faturamento;
+}
+
+BuscarFaturamentoPorPeriodo(dataInicio, dataFim){
+    if(dataInicio == null || dataFim == null)
+        return erro;
+    if(dataInicio > dataFim)
+        return erro;
+    var vendas = BuscarVendasPorPeriodoRepositorio(dataInicio, dataFim);
+    if(vendas == null || vendas.tamanho == 0)
+        return FaturamentoVazio(dataInicio);
+    return CalcularFaturamento(vendas, dataInicio);
+}
