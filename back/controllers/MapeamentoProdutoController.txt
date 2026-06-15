@@ -1,0 +1,64 @@
+// back/controllers/MapeamentoProdutoController
+
+MapearLinhaDaPlanilha(linha){
+    var nome = MapearColuna("nome", linha.nome);
+    if(nome == erro)
+        return erro;
+    var categoria = MapearColuna("categoria", linha.categoria);
+    if(categoria == erro)
+        return erro;
+    var quantidade = MapearColuna("quantidade", linha.quantidade);
+    if(quantidade == erro)
+        return erro;
+    var preco = MapearColuna("preco", linha.preco);
+    if(preco == erro)
+        return erro;
+    var produto = Produto {};
+    produto.nome = nome;
+    produto.categoria = categoria;
+    produto.quantidade = quantidade;
+    produto.preco = preco;
+    return produto;
+}
+
+MapearColuna(coluna, valor){
+    if(coluna == "nome")
+        if(!ValidarNomeProduto(valor))
+            return erro;
+        return valor;
+    if(coluna == "categoria")
+        if(valor == null || valor == "")
+            return "Sem categoria";
+        return valor;
+    if(coluna == "quantidade")
+        if(!ValidarQuantidade(valor))
+            return erro;
+        return valor;
+    if(coluna == "preco")
+        if(!ValidarPreco(valor))
+            return erro;
+        return valor;
+    return erro;
+}
+
+ValidarNomeProduto(nome){
+    if(nome == null || nome == "")
+        return false;
+    return true;
+}
+
+ValidarQuantidade(quantidade){
+    if(quantidade == null)
+        return false;
+    if(quantidade <= 0)
+        return false;
+    return true;
+}
+
+ValidarPreco(preco){
+    if(preco == null)
+        return false;
+    if(preco < 0)
+        return false;
+    return true;
+}
