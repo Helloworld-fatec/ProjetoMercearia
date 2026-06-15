@@ -1,5 +1,0 @@
-AdicionarProduto(Produto){
-    if(!ValidarNomeProduto(Produto.nome))
-        return erro;
-    AdicionarProduto(Produto);
-}

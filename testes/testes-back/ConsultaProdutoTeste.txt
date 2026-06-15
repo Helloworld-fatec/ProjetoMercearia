@@ -1,0 +1,9 @@
+testes/testes-back/ConsultaProdutoTeste
+
+DeveRetornarProdutoQuandoNomeExiste(BuscarProdutoPorNome("Café"));
+DeveRetornarVazioQuandoNomeNaoExiste(BuscarProdutoPorNome("ProdutoQueNaoExiste"));
+DeveRetornarProdutosQuandoCategoriaExiste(BuscarProdutoPorCategoria("Bebidas"));
+DeveRetornarVazioQuandoCategoriaNaoExiste(BuscarProdutoPorCategoria("CategoriaQueNaoExiste"));
+DeveRetornarTodosOsProdutos(ListarProdutos());
+DeveRetornarProdutosFiltradosPorNomeECategoria(BuscarProdutosPorFiltro("Café", "Bebidas"));
+DeveRetornarVazioQuandoFiltroNaoEncontraNada(BuscarProdutosPorFiltro("XYZ", "CategoriaXYZ"));
