@@ -1,0 +1,11 @@
+// back/models/ConfiguracaoRespostaAutomatica
+
+ConfiguracaoRespostaAutomatica {
+    id;
+    chave;
+    descricao;
+    conteudo;
+    ativo;
+    editavel;
+    ultimaAtualizacao;
+}

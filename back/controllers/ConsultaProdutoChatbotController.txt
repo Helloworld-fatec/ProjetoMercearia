@@ -1,0 +1,61 @@
+// back/controllers/ConsultaProdutoChatbotController
+
+ConsultarProdutoPorNomeViaWhatsApp(telefone, termoBusca){
+    if(telefone == null || telefone == "")
+        return erro;
+    if(termoBusca == null || termoBusca == "")
+        return MontarRespostaTermoVazio(telefone);
+    var termNormalizado = NormalizarTexto(termoBusca);
+    var produtos = BuscarProdutosPorTermoRepositorio(termNormalizado);
+    var consulta = ConsultaProdutoChatbot {};
+    consulta.telefoneCliente = telefone;
+    consulta.termoBuscado = termoBusca;
+    consulta.dataHora = ObterDataHoraAtual();
+    se(produtos == null || produtos.tamanho == 0)
+        consulta.produtosEncontrados = [];
+        SalvarConsultaRepositorio(consulta);
+        return MontarRespostaSemResultados(telefone, termoBusca);
+    consulta.produtosEncontrados = produtos;
+    SalvarConsultaRepositorio(consulta);
+    return MontarRespostaComResultados(telefone, produtos);
+}
+
+BuscarProdutosPorTermoRepositorio(termo){
+    var resultadosExatos = BuscarProdutoPorNomeExatoRepositorio(termo);
+    se(resultadosExatos != null && resultadosExatos.tamanho > 0)
+        return resultadosExatos;
+    return BuscarProdutosPorNomeParcialRepositorio(termo);
+}
+
+MontarRespostaComResultados(telefone, produtos){
+    var resposta = RespostaChatbot {};
+    resposta.telefoneDestino = telefone;
+    resposta.tipo = "consulta_produto";
+    se(produtos.tamanho == 1)
+        var produto = produtos[0];
+        resposta.conteudo = "Encontrei! *" + produto.nome + "*\n";
+        resposta.conteudo = resposta.conteudo + "Categoria: " + produto.categoria + "\n";
+        resposta.conteudo = resposta.conteudo + "Quantidade em estoque: " + produto.quantidade + "\n";
+        resposta.conteudo = resposta.conteudo + "Preço: R$ " + produto.preco;
+        return resposta;
+    resposta.conteudo = "Encontrei " + produtos.tamanho + " produto(s):\n";
+    para cada produto em produtos:
+        resposta.conteudo = resposta.conteudo + "• " + produto.nome + " - R$ " + produto.preco + " (Qtd: " + produto.quantidade + ")\n";
+    return resposta;
+}
+
+MontarRespostaSemResultados(telefone, termoBusca){
+    var resposta = RespostaChatbot {};
+    resposta.telefoneDestino = telefone;
+    resposta.tipo = "consulta_produto";
+    resposta.conteudo = "Não encontrei nenhum produto com o nome *'" + termoBusca + "'*. Tente buscar por outro nome ou fale com nosso atendente.";
+    return resposta;
+}
+
+MontarRespostaTermoVazio(telefone){
+    var resposta = RespostaChatbot {};
+    resposta.telefoneDestino = telefone;
+    resposta.tipo = "consulta_produto";
+    resposta.conteudo = "Qual produto você está procurando? Me informe o nome e verifico o estoque pra você!";
+    return resposta;
+}

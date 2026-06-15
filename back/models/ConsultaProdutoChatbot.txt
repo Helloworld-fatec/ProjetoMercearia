@@ -1,0 +1,8 @@
+// back/models/ConsultaProdutoChatbot
+
+ConsultaProdutoChatbot {
+    telefoneCliente;
+    termoBuscado;
+    produtosEncontrados[];
+    dataHora;
+}

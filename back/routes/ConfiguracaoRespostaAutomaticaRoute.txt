@@ -1,0 +1,7 @@
+// back/routes/ConfiguracaoRespostaAutomaticaRoute
+
+RotaListarConfiguracoes();
+RotaBuscarConfiguracaoPorChave(chave);
+RotaAtualizarConfiguracao(id, conteudo, ativo);
+RotaAtivarDesativarConfiguracao(id, ativo);
+RotaRestaurarConfiguracaoPadrao(id);

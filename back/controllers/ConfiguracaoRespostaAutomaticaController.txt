@@ -1,0 +1,85 @@
+// back/controllers/ConfiguracaoRespostaAutomaticaController
+
+ListarConfiguracoes(){
+    var configuracoes = ListarConfiguracoesRepositorio();
+    se(configuracoes == null || configuracoes.tamanho == 0)
+        return InicializarConfiguracoespadrao();
+    return configuracoes;
+}
+
+BuscarConfiguracaoPorChave(chave){
+    se(chave == null || chave == "")
+        return erro;
+    var configuracao = BuscarConfiguracaoPorChaveRepositorio(chave);
+    se(configuracao == null)
+        return erro;
+    return configuracao;
+}
+
+AtualizarConfiguracao(id, conteudo, ativo){
+    se(id == null)
+        return erro;
+    var configuracao = BuscarConfiguracaoRepositorio(id);
+    se(configuracao == null)
+        return erro;
+    se(!configuracao.editavel)
+        return erro;
+    se(conteudo == null || conteudo == "")
+        return erro;
+    configuracao.conteudo = conteudo;
+    configuracao.ativo = ativo;
+    configuracao.ultimaAtualizacao = ObterDataHoraAtual();
+    AtualizarConfiguracaoRepositorio(configuracao);
+    return configuracao;
+}
+
+AtivarDesativarConfiguracao(id, ativo){
+    se(id == null)
+        return erro;
+    var configuracao = BuscarConfiguracaoRepositorio(id);
+    se(configuracao == null)
+        return erro;
+    se(!configuracao.editavel)
+        return erro;
+    configuracao.ativo = ativo;
+    configuracao.ultimaAtualizacao = ObterDataHoraAtual();
+    AtualizarConfiguracaoRepositorio(configuracao);
+    return configuracao;
+}
+
+InicializarConfiguracoespadrao(){
+    var configuracoes = [];
+    configuracoes.adicionar(CriarConfiguracao("saudacao", "Saudação inicial", "Olá! Bem-vindo. Como posso te ajudar?", true, true));
+    configuracoes.adicionar(CriarConfiguracao("horario", "Horário de funcionamento", "Nosso horário é de segunda a sexta das 8h às 18h, e sábados das 8h às 13h.", true, true));
+    configuracoes.adicionar(CriarConfiguracao("localizacao", "Endereço da loja", "Estamos localizados na Rua Principal, 123.", true, true));
+    configuracoes.adicionar(CriarConfiguracao("handoff", "Transferência para vendedor", "Vou te conectar com um de nossos atendentes. Aguarde um momento!", true, true));
+    configuracoes.adicionar(CriarConfiguracao("padrao", "Resposta padrão (não entendido)", "Não entendi sua mensagem. Você pode perguntar sobre produtos, horários, localização ou falar com um atendente.", true, true));
+    configuracoes.adicionar(CriarConfiguracao("consulta_produto_generica", "Consulta de produto genérica", "Qual produto você está procurando? Me informe o nome!", true, true));
+    para cada configuracao em configuracoes:
+        SalvarConfiguracaoRepositorio(configuracao);
+    return configuracoes;
+}
+
+CriarConfiguracao(chave, descricao, conteudo, ativo, editavel){
+    var configuracao = ConfiguracaoRespostaAutomatica {};
+    configuracao.chave = chave;
+    configuracao.descricao = descricao;
+    configuracao.conteudo = conteudo;
+    configuracao.ativo = ativo;
+    configuracao.editavel = editavel;
+    configuracao.ultimaAtualizacao = ObterDataHoraAtual();
+    return configuracao;
+}
+
+RestaurarConfiguracaoPadrao(id){
+    se(id == null)
+        return erro;
+    var configuracao = BuscarConfiguracaoRepositorio(id);
+    se(configuracao == null)
+        return erro;
+    var textoPadrao = BuscarTextoPadraoOriginal(configuracao.chave);
+    configuracao.conteudo = textoPadrao;
+    configuracao.ultimaAtualizacao = ObterDataHoraAtual();
+    AtualizarConfiguracaoRepositorio(configuracao);
+    return configuracao;
+}
