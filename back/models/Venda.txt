@@ -1,0 +1,21 @@
+// back/models/Venda
+
+Venda {
+    id;
+    itens[];
+    totalBruto;
+    desconto;
+    totalLiquido;
+    formaPagamento;
+    dataHora;
+    clienteId;
+    status;
+}
+
+ItemVenda {
+    produtoId;
+    nomeProduto;
+    quantidade;
+    precoUnitario;
+    subtotal;
+}

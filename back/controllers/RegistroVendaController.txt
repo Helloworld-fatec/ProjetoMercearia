@@ -1,0 +1,53 @@
+// back/controllers/RegistroVendaController
+
+RegistrarVenda(venda){
+    if(venda == null)
+        return erro;
+    if(venda.itens == null || venda.itens.tamanho == 0)
+        return erro;
+    if(!ValidarFormaPagamento(venda.formaPagamento))
+        return erro;
+    var total = CalcularTotalVenda(venda.itens, venda.desconto);
+    if(total == erro)
+        return erro;
+    venda.totalLiquido = total;
+    venda.dataHora = ObterDataHoraAtual();
+    venda.status = "concluida";
+    AtualizarEstoqueAoVender(venda.itens);
+    SalvarVendaRepositorio(venda);
+    return venda;
+}
+
+CalcularTotalVenda(itens, desconto){
+    var totalBruto = 0;
+    para cada item em itens:
+        if(item.quantidade <= 0)
+            return erro;
+        item.subtotal = item.precoUnitario * item.quantidade;
+        totalBruto = totalBruto + item.subtotal;
+    if(desconto < 0 || desconto > totalBruto)
+        return erro;
+    return totalBruto - desconto;
+}
+
+ValidarFormaPagamento(formaPagamento){
+    if(formaPagamento == null || formaPagamento == "")
+        return false;
+    if(formaPagamento != "dinheiro" && formaPagamento != "cartao_credito" && formaPagamento != "cartao_debito" && formaPagamento != "pix")
+        return false;
+    return true;
+}
+
+CancelarVenda(vendaId){
+    if(vendaId == null)
+        return erro;
+    var venda = BuscarVendaRepositorio(vendaId);
+    if(venda == null)
+        return erro;
+    if(venda.status == "cancelada")
+        return erro;
+    venda.status = "cancelada";
+    EstornarEstoque(venda.itens);
+    AtualizarVendaRepositorio(venda);
+    return venda;
+}

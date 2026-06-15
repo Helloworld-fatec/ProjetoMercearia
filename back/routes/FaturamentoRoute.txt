@@ -1,0 +1,4 @@
+// back/routes/FaturamentoRoute
+
+RotaBuscarFaturamentoDiario(data);
+RotaBuscarFaturamentoPorPeriodo(dataInicio, dataFim);

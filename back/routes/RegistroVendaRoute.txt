@@ -1,0 +1,4 @@
+// back/routes/RegistroVendaRoute
+
+RotaRegistrarVenda(venda);
+RotaCancelarVenda(vendaId);
