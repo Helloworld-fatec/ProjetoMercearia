@@ -1,0 +1,10 @@
+// back/models/Despesa
+
+Despesa {
+    id;
+    descricao;
+    valor;
+    categoria;
+    data;
+    dataRegistro;
+}
