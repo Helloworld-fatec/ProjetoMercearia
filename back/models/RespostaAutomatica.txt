@@ -1,0 +1,8 @@
+// back/models/RespostaAutomatica
+
+RespostaAutomatica {
+    id;
+    chave;
+    conteudo;
+    ativo;
+}

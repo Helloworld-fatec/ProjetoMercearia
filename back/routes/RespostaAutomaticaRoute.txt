@@ -1,0 +1,4 @@
+// back/routes/RespostaAutomaticaRoute
+
+RotaListarRespostasAutomaticas();
+RotaAtualizarRespostaAutomatica(id, conteudo, ativo);
