@@ -1,0 +1,22 @@
+testes/testes-back/AlertaAjusteEstoqueTeste
+
+DeveDispararAlertaQuandoQuantidadeIgualAoEstoqueMinimo(VerificarAlertaEstoqueMinimo({ quantidade=10, estoqueMinimo=10 }));
+DeveDispararAlertaQuandoQuantidadeAbaixoDoEstoqueMinimo(VerificarAlertaEstoqueMinimo({ quantidade=5, estoqueMinimo=10 }));
+DeveNaoDispararAlertaQuandoQuantidadeAcimaDoEstoqueMinimo(VerificarAlertaEstoqueMinimo({ quantidade=15, estoqueMinimo=10 }));
+DeveDispararAlertaQuandoEstoqueZerado(VerificarAlertaEstoqueMinimo({ quantidade=0, estoqueMinimo=10 }));
+DeveRetornarErroQuandoProdutoNaoExistirAoVerificarAlerta(VerificarAlertaEstoqueMinimo({ produtoId=999 }));
+
+DeveRetornarAlertasAtivosCorretamente(ListarAlertasAtivos());
+DeveRetornarListaVaziaQuandoNaoHouverAlertasAtivos(ListarAlertasAtivos(semAlertas=true));
+DeveMarcarAlertaComoResolvidoComSucesso(ResolverAlerta(alertaId=1));
+DeveRetornarErroAoResolverAlertaInexistente(ResolverAlerta(alertaId=999));
+DeveRetornarErroAoResolverAlertaJaResolvido(ResolverAlerta(alertaId=1, status="resolvido"));
+
+DeveRegistrarAjusteDePerda(RegistrarAjusteEstoque({ produtoId=1, quantidade=5, tipo="perda", motivo="Produto vencido" }));
+DeveRegistrarAjusteDeDevolucao(RegistrarAjusteEstoque({ produtoId=1, quantidade=3, tipo="devolucao", motivo="Cliente devolveu" }));
+DeveRetornarErroAoAjustarEstoqueComQuantidadeNegativa(RegistrarAjusteEstoque({ produtoId=1, quantidade=-2, tipo="perda" }));
+DeveRetornarErroAoAjustarEstoqueComQuantidadeZero(RegistrarAjusteEstoque({ produtoId=1, quantidade=0, tipo="perda" }));
+DeveRetornarErroAoAjustarEstoqueComTipoInvalido(RegistrarAjusteEstoque({ produtoId=1, quantidade=2, tipo="invalido" }));
+DeveRetornarErroAoAjustarEstoqueDeProdutoInexistente(RegistrarAjusteEstoque({ produtoId=999, quantidade=2, tipo="perda" }));
+DeveRetornarErroAoRegistrarPerdaMaiorQueEstoqueDisponivel(RegistrarAjusteEstoque({ produtoId=1, quantidade=100, tipo="perda", estoqueAtual=5 }));
+DeveVerificarAlertaAposAjusteDePerda(VerificarAlertaAposAjuste({ produtoId=1, quantidade=2, tipo="perda", estoqueResultante=8, estoqueMinimo=10 }));
