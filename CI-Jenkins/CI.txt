@@ -1,5 +1,0 @@
-[COMPILA] Back
-[COMPILA] Front
-[EXECUTA] Teste
-[PUBLICA] Back
-[PUBLICA] Front

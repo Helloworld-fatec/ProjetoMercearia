@@ -1,0 +1,18 @@
+ci-jenkins/docker/Dockerfile-Front
+
+[IMAGEM-BASE] Node -> versao LTS
+[DEFINE] DiretorioTrabalho = /app
+
+[COPIA] front/package.json -> /app/package.json
+[INSTALA] Dependencias
+
+[COPIA] front/ -> /app/
+
+[COMPILA] Front -> /app/build
+
+[IMAGEM-BASE] Nginx -> versao estavel
+[COPIA] /app/build -> /usr/share/nginx/html
+
+[EXPOE] Porta = 80
+
+[EXECUTA] Nginx

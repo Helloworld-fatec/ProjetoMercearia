@@ -1,0 +1,35 @@
+ci-jenkins/pipeline-homologacao
+
+[GATILHO] Merge -> homolog
+
+[INSTALA] Dependencias Back
+[INSTALA] Dependencias Front
+
+[COMPILA] Back
+[COMPILA] Front
+
+[EXECUTA] Testes-Back
+[VERIFICA] Testes-Back == sucesso
+    [ABORTA] Pipeline se falhar
+
+[EXECUTA] Testes-Front
+[VERIFICA] Testes-Front == sucesso
+    [ABORTA] Pipeline se falhar
+
+[EXECUTA] Testes-Integracao
+[VERIFICA] Testes-Integracao == sucesso
+    [ABORTA] Pipeline se falhar
+
+[PUBLICA] Back -> ambiente-homolog
+[VERIFICA] Deploy-Back == sucesso
+    [ABORTA] Pipeline se falhar
+
+[PUBLICA] Front -> ambiente-homolog
+[VERIFICA] Deploy-Front == sucesso
+    [ABORTA] Pipeline se falhar
+
+[EXECUTA] Smoke-Test -> ambiente-homolog
+[VERIFICA] Smoke-Test == sucesso
+    [ALERTA] Time se falhar
+
+[NOTIFICA] Time == homolog publicado com sucesso

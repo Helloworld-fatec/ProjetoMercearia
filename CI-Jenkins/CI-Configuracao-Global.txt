@@ -1,0 +1,24 @@
+ci-jenkins/configuracao-global
+
+[AGENTE] Node -> versao LTS
+
+[VARIAVEL] DIR_BACK = "back/"
+[VARIAVEL] DIR_FRONT = "front/"
+[VARIAVEL] DIR_TESTES_BACK = "testes/testes-back/"
+[VARIAVEL] DIR_TESTES_FRONT = "testes/testes-front/"
+
+[VARIAVEL] URL_HOMOLOG = variavel-de-ambiente
+[VARIAVEL] URL_PRODUCAO = variavel-de-ambiente
+
+[VARIAVEL] COBERTURA_MINIMA = 80
+
+[CREDENCIAL] DB_HOMOLOG = credencial-jenkins-segura
+[CREDENCIAL] DB_PRODUCAO = credencial-jenkins-segura
+[CREDENCIAL] WHATSAPP_API_KEY = credencial-jenkins-segura
+
+[TIMEOUT] Pipeline = 30 minutos
+[TIMEOUT] Deploy = 10 minutos
+[TIMEOUT] Smoke-Test = 5 minutos
+
+[RETENTATIVA] Deploy = 2 tentativas
+[RETENTATIVA] Smoke-Test = 1 tentativa
