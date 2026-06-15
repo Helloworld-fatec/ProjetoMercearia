@@ -1,0 +1,9 @@
+// back/models/ProdutoModel
+
+Produto {
+    id;
+    nome;
+    categoria;
+    quantidade;
+    preço;
+}

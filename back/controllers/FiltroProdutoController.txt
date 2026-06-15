@@ -1,0 +1,20 @@
+// back/controllers/FiltroProdutoController
+
+BuscarProdutosPorFiltro(nome, categoria){
+    if(nome == null && categoria == null)
+        return erro;
+    var filtro = MontarFiltro(nome, categoria);
+    var produtos = BuscarProdutosPorFiltroRepositorio(filtro);
+    if(produtos == null)
+        return listaVazia;
+    return produtos;
+}
+
+MontarFiltro(nome, categoria){
+    var filtro = {};
+    if(nome != null && nome != "")
+        filtro.nome = nome;
+    if(categoria != null && categoria != "")
+        filtro.categoria = categoria;
+    return filtro;
+}
