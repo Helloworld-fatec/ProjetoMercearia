@@ -1,0 +1,29 @@
+ci-jenkins/docker/VariaveisAmbiente
+
+[ARQUIVO] .env.desenvolvimento
+    DB_NAME = estoque_dev
+    DB_USER = usuario_dev
+    DB_PASSWORD = senha_dev
+    REACT_APP_API_URL = http://localhost:3000
+    WHATSAPP_API_KEY = chave-sandbox-whatsapp
+    PORTA = 3000
+
+[ARQUIVO] .env.homologacao
+    DB_NAME = estoque_homolog
+    DB_USER = variavel-de-ambiente-segura
+    DB_PASSWORD = variavel-de-ambiente-segura
+    REACT_APP_API_URL = variavel-de-ambiente-segura
+    WHATSAPP_API_KEY = variavel-de-ambiente-segura
+    PORTA = 3000
+
+[ARQUIVO] .env.producao
+    DB_NAME = estoque_producao
+    DB_USER = variavel-de-ambiente-segura
+    DB_PASSWORD = variavel-de-ambiente-segura
+    REACT_APP_API_URL = variavel-de-ambiente-segura
+    WHATSAPP_API_KEY = variavel-de-ambiente-segura
+    PORTA = 3000
+
+[OBSERVACAO] Nunca commitar .env.homologacao e .env.producao no repositorio
+[OBSERVACAO] Adicionar .env.homologacao e .env.producao no .gitignore
+[OBSERVACAO] .env.desenvolvimento pode ser commitado como referencia para novos devs

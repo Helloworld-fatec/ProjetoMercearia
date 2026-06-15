@@ -1,0 +1,16 @@
+ci-jenkins/docker/Dockerfile-Back
+
+[IMAGEM-BASE] Node -> versao LTS
+
+[DEFINE] DiretorioTrabalho = /app
+
+[COPIA] back/package.json -> /app/package.json
+[INSTALA] Dependencias
+
+[COPIA] back/ -> /app/
+
+[COMPILA] Back
+
+[EXPOE] Porta = 3000
+
+[EXECUTA] Back

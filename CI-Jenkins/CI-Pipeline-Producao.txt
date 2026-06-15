@@ -1,0 +1,45 @@
+ci-jenkins/pipeline-producao
+
+[GATILHO] Merge -> main
+
+[INSTALA] Dependencias Back
+[INSTALA] Dependencias Front
+
+[COMPILA] Back
+[COMPILA] Front
+
+[EXECUTA] Testes-Back
+[VERIFICA] Testes-Back == sucesso
+    [ABORTA] Pipeline se falhar
+
+[EXECUTA] Testes-Front
+[VERIFICA] Testes-Front == sucesso
+    [ABORTA] Pipeline se falhar
+
+[EXECUTA] Testes-Integracao
+[VERIFICA] Testes-Integracao == sucesso
+    [ABORTA] Pipeline se falhar
+
+[AGUARDA] Aprovacao manual -> responsavel tecnico
+[VERIFICA] Aprovacao == concedida
+    [ABORTA] Pipeline se negada
+
+[BACKUP] Banco de Dados -> producao
+
+[PUBLICA] Back -> ambiente-producao
+[VERIFICA] Deploy-Back == sucesso
+    [ROLLBACK] Back se falhar
+    [ABORTA] Pipeline se falhar
+
+[PUBLICA] Front -> ambiente-producao
+[VERIFICA] Deploy-Front == sucesso
+    [ROLLBACK] Front se falhar
+    [ABORTA] Pipeline se falhar
+
+[EXECUTA] Smoke-Test -> ambiente-producao
+[VERIFICA] Smoke-Test == sucesso
+    [ROLLBACK] Back se falhar
+    [ROLLBACK] Front se falhar
+    [NOTIFICA] Time == falha em producao
+
+[NOTIFICA] Time == producao publicada com sucesso

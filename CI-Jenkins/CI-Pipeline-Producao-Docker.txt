@@ -1,0 +1,59 @@
+ci-jenkins/pipeline-producao-docker
+
+[GATILHO] Merge -> main
+
+[INSTALA] Dependencias Back
+[INSTALA] Dependencias Front
+
+[COMPILA] Back
+[COMPILA] Front
+
+[EXECUTA] Testes-Back
+[VERIFICA] Testes-Back == sucesso
+    [ABORTA] Pipeline se falhar
+
+[EXECUTA] Testes-Front
+[VERIFICA] Testes-Front == sucesso
+    [ABORTA] Pipeline se falhar
+
+[EXECUTA] Testes-Integracao
+[VERIFICA] Testes-Integracao == sucesso
+    [ABORTA] Pipeline se falhar
+
+[AGUARDA] Aprovacao manual -> responsavel tecnico
+[VERIFICA] Aprovacao == concedida
+    [ABORTA] Pipeline se negada
+
+[DOCKER] Construir imagem Back -> tag com hash do commit
+[DOCKER] Construir imagem Front -> tag com hash do commit
+[VERIFICA] Imagens construidas com sucesso
+    [ABORTA] Pipeline se falhar
+
+[DOCKER] Publicar imagem Back -> registro privado
+[DOCKER] Publicar imagem Front -> registro privado
+
+[BACKUP] Banco de Dados -> producao
+
+[DOCKER] Baixar imagem Back -> tag do commit atual
+[DOCKER] Parar container Back -> producao
+[DOCKER] Subir container Back -> producao com nova imagem
+[VERIFICA] Container-Back == rodando
+    [DOCKER] Restaurar container Back -> imagem anterior se falhar
+    [ABORTA] Pipeline se falhar
+
+[DOCKER] Baixar imagem Front -> tag do commit atual
+[DOCKER] Parar container Front -> producao
+[DOCKER] Subir container Front -> producao com nova imagem
+[VERIFICA] Container-Front == rodando
+    [DOCKER] Restaurar container Front -> imagem anterior se falhar
+    [ABORTA] Pipeline se falhar
+
+[EXECUTA] Smoke-Test -> ambiente-producao
+[VERIFICA] Smoke-Test == sucesso
+    [DOCKER] Restaurar container Back -> imagem anterior se falhar
+    [DOCKER] Restaurar container Front -> imagem anterior se falhar
+    [NOTIFICA] Time == falha em producao
+
+[DOCKER] Remover imagens antigas -> manter ultimas 3 versoes
+
+[NOTIFICA] Time == producao publicada com sucesso

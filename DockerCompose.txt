@@ -1,0 +1,35 @@
+ci-jenkins/docker/DockerCompose
+
+[VERSAO] Compose = 3
+
+[SERVICO] banco-de-dados
+    [IMAGEM] PostgreSQL -> versao estavel
+    [VARIAVEL] POSTGRES_DB = variavel-de-ambiente
+    [VARIAVEL] POSTGRES_USER = variavel-de-ambiente
+    [VARIAVEL] POSTGRES_PASSWORD = variavel-de-ambiente
+    [VOLUME] dados-banco -> /var/lib/postgresql/data
+    [PORTA] 5432 -> 5432
+    [SAUDE] VerificarConexaoBanco() a cada 10 segundos
+    [REINICIA] Sempre
+
+[SERVICO] back
+    [CONSTROI] Dockerfile-Back
+    [VARIAVEL] DB_HOST = banco-de-dados
+    [VARIAVEL] DB_PORT = 5432
+    [VARIAVEL] DB_NAME = variavel-de-ambiente
+    [VARIAVEL] DB_USER = variavel-de-ambiente
+    [VARIAVEL] DB_PASSWORD = variavel-de-ambiente
+    [VARIAVEL] WHATSAPP_API_KEY = variavel-de-ambiente
+    [VARIAVEL] PORTA = 3000
+    [PORTA] 3000 -> 3000
+    [DEPENDE] banco-de-dados -> saudavel
+    [REINICIA] Sempre
+
+[SERVICO] front
+    [CONSTROI] Dockerfile-Front
+    [VARIAVEL] REACT_APP_API_URL = variavel-de-ambiente
+    [PORTA] 80 -> 80
+    [DEPENDE] back
+    [REINICIA] Sempre
+
+[VOLUME] dados-banco
