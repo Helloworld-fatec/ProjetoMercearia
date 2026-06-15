@@ -1,0 +1,114 @@
+// back/controllers/HandoffController
+
+AcionarVendedor(mensagem){
+    if(mensagem == null || mensagem.telefoneRemetente == null)
+        return erro;
+    var handoffExistente = BuscarHandoffAbertoRepositorio(mensagem.telefoneRemetente);
+    se(handoffExistente != null)
+        return MontarRespostaHandoffJaAberto(mensagem);
+    var historico = BuscarHistoricoMensagensRepositorio(mensagem.telefoneRemetente);
+    var handoff = Handoff {};
+    handoff.telefoneCliente = mensagem.telefoneRemetente;
+    handoff.nomeCliente = mensagem.nomeRemetente;
+    handoff.motivoHandoff = mensagem.conteudo;
+    handoff.historicoMensagens = historico;
+    handoff.status = "aberto";
+    handoff.dataAbertura = ObterDataHoraAtual();
+    SalvarHandoffRepositorio(handoff);
+    NotificarVendedorDisponivel(handoff);
+    return MontarRespostaHandoffSolicitado(mensagem);
+}
+
+NotificarVendedorDisponivel(handoff){
+    var notificacao = Notificacao {};
+    notificacao.tipo = "handoff_solicitado";
+    notificacao.telefoneCliente = handoff.telefoneCliente;
+    notificacao.nomeCliente = handoff.nomeCliente;
+    notificacao.ultimaMensagem = handoff.motivoHandoff;
+    notificacao.handoffId = handoff.id;
+    notificacao.status = "pendente";
+    notificacao.dataHora = ObterDataHoraAtual();
+    SalvarNotificacaoRepositorio(notificacao);
+}
+
+AssumirHandoff(handoffId, vendedor){
+    if(handoffId == null || vendedor == null)
+        return erro;
+    var handoff = BuscarHandoffRepositorio(handoffId);
+    se(handoff == null)
+        return erro;
+    se(handoff.status != "aberto")
+        return erro;
+    handoff.vendedorResponsavel = vendedor;
+    handoff.status = "em_atendimento";
+    AtualizarHandoffRepositorio(handoff);
+    AtualizarNotificacaoHandoff(handoffId, "assumida");
+    EnviarMensagemVendedorAssumiu(handoff);
+    return handoff;
+}
+
+EncerrarHandoff(handoffId){
+    if(handoffId == null)
+        return erro;
+    var handoff = BuscarHandoffRepositorio(handoffId);
+    se(handoff == null)
+        return erro;
+    se(handoff.status == "encerrado")
+        return erro;
+    handoff.status = "encerrado";
+    handoff.dataEncerramento = ObterDataHoraAtual();
+    AtualizarHandoffRepositorio(handoff);
+    EnviarMensagemEncerramento(handoff);
+    return handoff;
+}
+
+ListarHandoffsAbertos(){
+    var handoffs = BuscarHandoffsPorStatusRepositorio("aberto");
+    se(handoffs == null)
+        return listaVazia;
+    return handoffs;
+}
+
+ListarHandoffsEmAtendimento(){
+    var handoffs = BuscarHandoffsPorStatusRepositorio("em_atendimento");
+    se(handoffs == null)
+        return listaVazia;
+    return handoffs;
+}
+
+MontarRespostaHandoffSolicitado(mensagem){
+    var conteudo = BuscarRespostaAutomatica("handoff");
+    se(conteudo == null)
+        conteudo = "Entendido! Vou te conectar com um de nossos atendentes. Em breve alguém entrará em contato!";
+    var resposta = RespostaChatbot {};
+    resposta.telefoneDestino = mensagem.telefoneRemetente;
+    resposta.conteudo = conteudo;
+    resposta.tipo = "handoff";
+    return resposta;
+}
+
+MontarRespostaHandoffJaAberto(mensagem){
+    var resposta = RespostaChatbot {};
+    resposta.telefoneDestino = mensagem.telefoneRemetente;
+    resposta.conteudo = "Você já possui um atendimento em aberto. Nosso atendente entrará em contato em breve!";
+    resposta.tipo = "handoff";
+    return resposta;
+}
+
+EnviarMensagemVendedorAssumiu(handoff){
+    var mensagem = "Olá! Sou " + handoff.vendedorResponsavel + " e estou aqui para te ajudar. Como posso te atender?";
+    ChamarAPIWhatsApp(handoff.telefoneCliente, mensagem);
+}
+
+EnviarMensagemEncerramento(handoff){
+    var mensagem = "Seu atendimento foi encerrado. Obrigado pelo contato! Qualquer dúvida, estamos à disposição.";
+    ChamarAPIWhatsApp(handoff.telefoneCliente, mensagem);
+}
+
+AtualizarNotificacaoHandoff(handoffId, status){
+    var notificacao = BuscarNotificacaoPorHandoffRepositorio(handoffId);
+    se(notificacao == null)
+        return;
+    notificacao.status = status;
+    AtualizarNotificacaoRepositorio(notificacao);
+}

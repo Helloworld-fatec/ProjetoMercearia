@@ -1,0 +1,12 @@
+// back/models/Notificacao
+
+Notificacao {
+    id;
+    tipo;
+    telefoneCliente;
+    nomeCliente;
+    ultimaMensagem;
+    handoffId;
+    status;
+    dataHora;
+}

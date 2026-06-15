@@ -1,0 +1,7 @@
+// back/routes/HandoffRoute
+
+RotaAcionarVendedor(mensagem);
+RotaAssumirHandoff(handoffId, vendedor);
+RotaEncerrarHandoff(handoffId);
+RotaListarHandoffsAbertos();
+RotaListarHandoffsEmAtendimento();
