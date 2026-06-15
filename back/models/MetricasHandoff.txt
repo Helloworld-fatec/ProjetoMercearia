@@ -1,0 +1,11 @@
+// back/models/MetricasHandoff
+
+MetricasHandoff {
+    dataInicio;
+    dataFim;
+    totalHandoffs;
+    totalEncerrados;
+    totalAbertos;
+    totalEmAtendimento;
+    tempoMedioAtendimento;
+}
