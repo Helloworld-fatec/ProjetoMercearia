@@ -1,0 +1,9 @@
+// back/models/
+
+RelatorioEstoque {
+    dataGeracao;
+    totalProdutos;
+    totalItensEmEstoque;
+    totalProdutosAbaixoMinimo;
+    produtos[];
+}

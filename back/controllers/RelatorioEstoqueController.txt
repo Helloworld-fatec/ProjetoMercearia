@@ -1,0 +1,18 @@
+// back/controllers/RelatorioEstoqueController
+
+GerarRelatorioEstoque(){
+    var produtos = ListarProdutosRepositorio();
+    if(produtos == null)
+        produtos = [];
+    var relatorio = RelatorioEstoque {};
+    relatorio.dataGeracao = ObterDataHoraAtual();
+    relatorio.produtos = produtos;
+    relatorio.totalProdutos = produtos.tamanho;
+    relatorio.totalItensEmEstoque = 0;
+    relatorio.totalProdutosAbaixoMinimo = 0;
+    para cada produto em produtos:
+        relatorio.totalItensEmEstoque = relatorio.totalItensEmEstoque + produto.quantidade;
+        if(produto.quantidade <= produto.estoqueMinimo)
+            relatorio.totalProdutosAbaixoMinimo = relatorio.totalProdutosAbaixoMinimo + 1;
+    return relatorio;
+}
