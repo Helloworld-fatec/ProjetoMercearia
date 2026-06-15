@@ -1,0 +1,4 @@
+// back/routes/AjusteEstoqueRoute
+
+RotaRegistrarAjusteEstoque(ajuste);
+RotaListarAjustesEstoque(produtoId);

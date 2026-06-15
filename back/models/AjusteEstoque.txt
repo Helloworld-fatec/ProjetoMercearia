@@ -1,0 +1,13 @@
+// back/models/AjusteEstoque
+
+AjusteEstoque {
+    id;
+    produtoId;
+    nomeProduto;
+    quantidadeAntes;
+    quantidadeAjustada;
+    quantidadeDepois;
+    tipo;
+    motivo;
+    dataHora;
+}
