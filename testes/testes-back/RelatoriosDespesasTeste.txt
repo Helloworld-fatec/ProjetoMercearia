@@ -1,0 +1,28 @@
+testes/testes-back/RelatoriosDespesasTeste
+
+DeveExportarRelatorioDeVendasEmPDFComSucesso(ExportarRelatorioVendas("2024-01-01", "2024-01-31", "pdf"));
+DeveExportarRelatorioDeVendasEmExcelComSucesso(ExportarRelatorioVendas("2024-01-01", "2024-01-31", "excel"));
+DeveRetornarErroAoExportarVendasComDataInicioNula(ExportarRelatorioVendas(null, "2024-01-31", "pdf"));
+DeveRetornarErroAoExportarVendasComDataFimNula(ExportarRelatorioVendas("2024-01-01", null, "pdf"));
+DeveRetornarErroAoExportarVendasComDataInicioMaiorQueDataFim(ExportarRelatorioVendas("2024-02-01", "2024-01-01", "pdf"));
+DeveRetornarErroAoExportarVendasComFormatoInvalido(ExportarRelatorioVendas("2024-01-01", "2024-01-31", "csv"));
+DeveRetornarErroAoExportarVendasSemVendasNoPeriodo(ExportarRelatorioVendas("2000-01-01", "2000-01-01", "pdf"));
+
+DeveExportarRelatorioDeEstoqueEmPDFComSucesso(ExportarRelatorioEstoque("pdf"));
+DeveExportarRelatorioDeEstoqueEmExcelComSucesso(ExportarRelatorioEstoque("excel"));
+DeveRetornarErroAoExportarEstoqueComFormatoInvalido(ExportarRelatorioEstoque("csv"));
+
+DeveExportarRelatorioDeDespesasEmPDFComSucesso(ExportarRelatorioDespesas("2024-01-01", "2024-01-31", "pdf"));
+DeveExportarRelatorioDeDespesasEmExcelComSucesso(ExportarRelatorioDespesas("2024-01-01", "2024-01-31", "excel"));
+DeveRetornarErroAoExportarDespesasComPeriodoInvalido(ExportarRelatorioDespesas("2024-02-01", "2024-01-01", "pdf"));
+DeveRetornarErroAoExportarDespesasSemDespesasNoPeriodo(ExportarRelatorioDespesas("2000-01-01", "2000-01-01", "pdf"));
+
+DeveRegistrarDespesaComSucesso(RegistrarDespesa({ descricao="Aluguel", valor=1500.00, categoria="fixo", data="2024-01-05" }));
+DeveRetornarErroAoRegistrarDespesaSemDescricao(RegistrarDespesa({ descricao="", valor=1500.00, categoria="fixo" }));
+DeveRetornarErroAoRegistrarDespesaComValorZero(RegistrarDespesa({ descricao="Aluguel", valor=0, categoria="fixo" }));
+DeveRetornarErroAoRegistrarDespesaComValorNegativo(RegistrarDespesa({ descricao="Aluguel", valor=-100.00, categoria="fixo" }));
+DeveRetornarErroAoRegistrarDespesaComCategoriaNula(RegistrarDespesa({ descricao="Aluguel", valor=1500.00, categoria=null }));
+DeveRetornarErroAoRegistrarDespesaComDataNula(RegistrarDespesa({ descricao="Aluguel", valor=1500.00, categoria="fixo", data=null }));
+DeveListarDespesasPorPeriodoComSucesso(ListarDespesas("2024-01-01", "2024-01-31"));
+DeveRetornarListaVaziaAoListarDespesasSemDespesasNoPeriodo(ListarDespesas("2000-01-01", "2000-01-01"));
+DeveCalcularTotalDeDespesasCorretamente(CalcularTotalDespesas([{ valor=500.00 }, { valor=300.00 }, { valor=200.00 }], totalEsperado=1000.00));
