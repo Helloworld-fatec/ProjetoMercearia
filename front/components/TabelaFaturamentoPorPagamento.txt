@@ -1,0 +1,11 @@
+// front/componentes/TabelaFaturamentoPorPagamento
+
+ExibirTabelaPorFormaPagamento(totaisPorFormaPagamento){
+    se(totaisPorFormaPagamento == null || totaisPorFormaPagamento.tamanho == 0)
+        renderizar("Sem dados de pagamento.");
+        return;
+    para cada registro em totaisPorFormaPagamento:
+        renderizar(registro.formaPagamento);
+        renderizar(registro.quantidadeVendas);
+        renderizar(registro.total);
+}

@@ -1,0 +1,9 @@
+// front/componentes/ResumoFaturamento
+
+ExibirResumoFaturamento(faturamento){
+    se(faturamento == null || faturamento.totalGeral == 0)
+        renderizar("Nenhuma venda registrada no período.");
+        return;
+    renderizar("Total do dia: " + faturamento.totalGeral);
+    renderizar("Quantidade de vendas: " + faturamento.quantidadeVendas);
+}
