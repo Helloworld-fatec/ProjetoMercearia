@@ -1,0 +1,21 @@
+testes/testes-front/IntegracaoCaixaClienteTeste
+
+DeveRegistrarVendaComSucessoAoConfirmarPedido(ConfirmarVenda({ itens=[{ produtoId=1, quantidade=2, precoUnitario=12.90 }], formaPagamento="pix", desconto=0 }));
+DeveExibirErroAoTentarRegistrarVendaSemItens(ConfirmarVenda({ itens=[], formaPagamento="pix", desconto=0 }));
+DeveExibirErroAoTentarRegistrarVendaSemFormaPagamento(ConfirmarVenda({ itens=[{ produtoId=1, quantidade=1, precoUnitario=10.00 }], formaPagamento=null }));
+DeveExibirTotalCalculadoCorretamenteNaTelaCaixa(VerificarTotalNaTela({ itens=[{ quantidade=2, precoUnitario=12.90 }], desconto=0, totalEsperado=25.80 }));
+DeveExibirTotalComDescontoCorretamenteNaTelaCaixa(VerificarTotalNaTela({ itens=[{ quantidade=2, precoUnitario=12.90 }], desconto=5.00, totalEsperado=20.80 }));
+DeveCancelarVendaComSucesso(CancelarVenda(vendaId=1));
+DeveExibirErroAoCancelarVendaJaCancelada(CancelarVenda(vendaId=1, status="cancelada"));
+DeveAtualizarTelaCaixaAposRegistrarVenda(VerificarAtualizacaoTelaCaixaAposVenda());
+
+DeveExibirFaturamentoDiarioAoCarregarTelaFaturamento(CarregarTelaFaturamento(data=hoje));
+DeveExibirFaturamentoZeradoQuandoNaoHouverVendasNoDia(CarregarTelaFaturamento(data=dataSemVendas));
+DeveExibirTotalPorFormaPagamentoCorretamente(VerificarTotalPorFormaPagamento(formaPagamento="pix", totalEsperado=50.00));
+DeveExibirQuantidadeDeVendasCorretamente(VerificarQuantidadeVendasNaTela(quantidadeEsperada=3));
+DeveAtualizarFaturamentoAoSelecionarNovaData(AlterarDataFaturamento(novaData="2024-01-15"));
+
+DeveCadastrarClienteComSucesso(CadastrarCliente({ nome="João Silva", telefone="11999999999", email="joao@email.com" }));
+DeveExibirErroAoCadastrarClienteSemNome(CadastrarCliente({ nome="", telefone="11999999999", email="joao@email.com" }));
+DeveExibirErroAoCadastrarClienteSemTelefone(CadastrarCliente({ nome="João Silva", telefone="", email="joao@email.com" }));
+DeveVincularClienteAVendaComSucesso(VincularClienteAVenda(clienteId=1, vendaId=1));

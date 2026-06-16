@@ -1,0 +1,10 @@
+// front/componentes/SeletorDataFaturamento
+
+ExibirSeletorData(dataSelecionada, onAlterar){
+    input(tipo=data, valor=dataSelecionada, onChange=onAlterar);
+}
+
+ExibirSeletorPeriodo(dataInicio, dataFim, onAlterarInicio, onAlterarFim){
+    input(tipo=data, label="De", valor=dataInicio, onChange=onAlterarInicio);
+    input(tipo=data, label="Até", valor=dataFim, onChange=onAlterarFim);
+}

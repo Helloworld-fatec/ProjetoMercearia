@@ -1,0 +1,9 @@
+// front/componentes/SeletorFormaPagamento
+
+ExibirSeletorFormaPagamento(onSelecionar){
+    renderizar(opcao("Dinheiro", valor="dinheiro"));
+    renderizar(opcao("Cartão de Crédito", valor="cartao_credito"));
+    renderizar(opcao("Cartão de Débito", valor="cartao_debito"));
+    renderizar(opcao("Pix", valor="pix"));
+    onChange = onSelecionar;
+}

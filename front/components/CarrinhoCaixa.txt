@@ -1,0 +1,13 @@
+// front/componentes/CarrinhoCaixa
+
+ExibirCarrinho(itens, onRemover){
+    se(itens.tamanho == 0)
+        renderizar("Nenhum produto adicionado.");
+        return;
+    para cada item em itens:
+        renderizar(item.nomeProduto);
+        renderizar(item.quantidade);
+        renderizar(item.precoUnitario);
+        renderizar(item.subtotal);
+        renderizar(botaoRemover(onClick = onRemover(item.produtoId)));
+}

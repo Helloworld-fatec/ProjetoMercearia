@@ -1,0 +1,7 @@
+// front/componentes/ResumoTotalCaixa
+
+ExibirResumoTotal(totalBruto, desconto, totalLiquido){
+    renderizar("Subtotal: " + totalBruto);
+    renderizar("Desconto: " + desconto);
+    renderizar("Total: " + totalLiquido);
+}

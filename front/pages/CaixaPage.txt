@@ -1,0 +1,95 @@
+// front/pages/CaixaPage
+
+estado {
+    itensCarrinho = [];
+    formaPagamento = null;
+    desconto = 0;
+    totalBruto = 0;
+    totalLiquido = 0;
+    clienteId = null;
+    vendaConcluidaId = null;
+}
+
+CarregarPagina(){
+    ExibirTitulo("Caixa");
+    ExibirSelecaoCliente(onSelecionar = DefinirCliente);
+    ExibirCarrinho(itensCarrinho, onRemover = RemoverItemCarrinho);
+    ExibirSeletorFormaPagamento(onSelecionar = DefinirFormaPagamento);
+    ExibirCampoDesconto(onAlterar = DefinirDesconto);
+    ExibirResumoTotal(totalBruto, desconto, totalLiquido);
+    ExibirBotaoConfirmarVenda(onConfirmar = ConfirmarVenda);
+}
+
+AdicionarItemCarrinho(produto, quantidade){
+    if(produto == null || quantidade <= 0)
+        return;
+    var item = ItemVenda {};
+    item.produtoId = produto.id;
+    item.nomeProduto = produto.nome;
+    item.quantidade = quantidade;
+    item.precoUnitario = produto.preco;
+    item.subtotal = produto.preco * quantidade;
+    itensCarrinho.adicionar(item);
+    RecalcularTotal();
+}
+
+RemoverItemCarrinho(produtoId){
+    itensCarrinho.remover(produtoId);
+    RecalcularTotal();
+}
+
+RecalcularTotal(){
+    totalBruto = 0;
+    para cada item em itensCarrinho:
+        totalBruto = totalBruto + item.subtotal;
+    totalLiquido = totalBruto - desconto;
+    ExibirResumoTotal(totalBruto, desconto, totalLiquido);
+}
+
+DefinirFormaPagamento(formaPagamento){
+    formaPagamento = formaPagamento;
+}
+
+DefinirDesconto(valor){
+    desconto = valor;
+    RecalcularTotal();
+}
+
+DefinirCliente(clienteId){
+    clienteId = clienteId;
+}
+
+ConfirmarVenda(){
+    if(itensCarrinho.tamanho == 0)
+        ExibirMensagemErro("Adicione ao menos um produto.");
+        return;
+    if(formaPagamento == null)
+        ExibirMensagemErro("Selecione a forma de pagamento.");
+        return;
+    var venda = MontarVenda();
+    var resultado = RegistrarVenda(venda);
+    if(resultado == erro)
+        ExibirMensagemErro("Erro ao registrar venda.");
+        return;
+    vendaConcluidaId = resultado.id;
+    LimparCaixa();
+    ExibirMensagemSucesso("Venda registrada com sucesso!");
+}
+
+MontarVenda(){
+    var venda = Venda {};
+    venda.itens = itensCarrinho;
+    venda.formaPagamento = formaPagamento;
+    venda.desconto = desconto;
+    venda.clienteId = clienteId;
+    return venda;
+}
+
+LimparCaixa(){
+    itensCarrinho = [];
+    formaPagamento = null;
+    desconto = 0;
+    totalBruto = 0;
+    totalLiquido = 0;
+    clienteId = null;
+}

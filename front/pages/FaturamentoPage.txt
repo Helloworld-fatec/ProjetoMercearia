@@ -1,0 +1,40 @@
+// front/pages/FaturamentoPage
+
+estado {
+    dataSelecionada = hoje;
+    faturamento = null;
+    modoBusca = "diario";
+    dataInicio = null;
+    dataFim = null;
+}
+
+CarregarPagina(){
+    ExibirTitulo("Faturamento");
+    ExibirSeletorModoBusca(onSelecionar = AlterarModoBusca);
+    ExibirSeletorData(dataSelecionada, onAlterar = AlterarData);
+    CarregarFaturamento();
+}
+
+CarregarFaturamento(){
+    var resultado = null;
+    if(modoBusca == "diario")
+        resultado = BuscarFaturamentoDiario(dataSelecionada);
+    if(modoBusca == "periodo")
+        resultado = BuscarFaturamentoPorPeriodo(dataInicio, dataFim);
+    if(resultado == erro)
+        ExibirMensagemErro("Erro ao carregar faturamento.");
+        return;
+    faturamento = resultado;
+    ExibirResumoFaturamento(faturamento);
+    ExibirTabelaPorFormaPagamento(faturamento.totalPorFormaPagamento);
+}
+
+AlterarData(novaData){
+    dataSelecionada = novaData;
+    CarregarFaturamento();
+}
+
+AlterarModoBusca(modo){
+    modoBusca = modo;
+    CarregarFaturamento();
+}

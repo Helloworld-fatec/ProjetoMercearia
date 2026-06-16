@@ -1,0 +1,17 @@
+// front/services/FaturamentoService
+
+BuscarFaturamentoDiario(data){
+    var resposta = ChamarAPI(RotaBuscarFaturamentoDiario(data));
+    if(resposta == erro)
+        return erro;
+    return resposta.faturamento;
+}
+
+BuscarFaturamentoPorPeriodo(dataInicio, dataFim){
+    if(dataInicio == null || dataFim == null)
+        return erro;
+    var resposta = ChamarAPI(RotaBuscarFaturamentoPorPeriodo(dataInicio, dataFim));
+    if(resposta == erro)
+        return erro;
+    return resposta.faturamento;
+}
