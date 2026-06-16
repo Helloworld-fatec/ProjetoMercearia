@@ -1,0 +1,15 @@
+// front/services/CaixaService
+
+RegistrarVenda(venda){
+    var resposta = ChamarAPI(RotaRegistrarVenda(venda));
+    if(resposta == erro)
+        return erro;
+    return resposta.venda;
+}
+
+CancelarVenda(vendaId){
+    var resposta = ChamarAPI(RotaCancelarVenda(vendaId));
+    if(resposta == erro)
+        return erro;
+    return resposta.venda;
+}
