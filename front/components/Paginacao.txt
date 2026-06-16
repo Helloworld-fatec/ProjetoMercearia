@@ -1,0 +1,15 @@
+// front/componentes/Paginacao
+
+ExibirControlesDePaginacao(paginaAtual, totalPaginas){
+    renderizar(botaoAnterior(desabilitado = paginaAtual == 1));
+    renderizar(indicadorPagina(paginaAtual, totalPaginas));
+    renderizar(botaoProximo(desabilitado = paginaAtual == totalPaginas));
+}
+
+AoBotaoAnteriorClicar(onVoltarPagina){
+    onVoltarPagina();
+}
+
+AoBotaoProximoClicar(onAvancarPagina){
+    onAvancarPagina();
+}

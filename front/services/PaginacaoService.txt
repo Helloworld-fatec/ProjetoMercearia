@@ -1,0 +1,15 @@
+// front/services/PaginacaoService
+
+BuscarProdutosPaginados(pagina, limite){
+    var resposta = ChamarAPI(RotaListarProdutos(pagina, limite));
+    if(resposta == erro)
+        return erro;
+    return resposta;
+}
+
+BuscarProdutosFiltradosPaginados(nome, categoria, pagina, limite){
+    var resposta = ChamarAPI(RotaBuscarProdutosPorFiltro(nome, categoria, pagina, limite));
+    if(resposta == erro)
+        return erro;
+    return resposta;
+}

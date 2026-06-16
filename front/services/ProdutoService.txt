@@ -1,0 +1,15 @@
+// front/services/ProdutoService
+
+BuscarTodosProdutos(){
+    var resposta = ChamarAPI(RotaListarProdutos());
+    if(resposta == erro)
+        return erro;
+    return resposta.produtos;
+}
+
+BuscarProdutosPorFiltro(nome, categoria){
+    var resposta = ChamarAPI(RotaBuscarProdutosPorFiltro(nome, categoria));
+    if(resposta == erro)
+        return erro;
+    return resposta.produtos;
+}
