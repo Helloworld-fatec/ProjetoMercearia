@@ -1,0 +1,21 @@
+testes/testes-back/ImportacaoProdutoTeste
+
+DeveRetornarSucessoAoImportarArquivoValido(ImportarPlanilha("produtos_validos.xlsx"));
+DeveRetornarErroAoImportarArquivoVazio(ImportarPlanilha("arquivo_vazio.xlsx"));
+DeveRetornarErroAoImportarArquivoComFormatoInvalido(ImportarPlanilha("arquivo.pdf"));
+DeveRetornarErroAoImportarArquivoNulo(ImportarPlanilha(null));
+
+DeveMapearColunaDeNomeCorretamente(MapearColuna("nome", "Café"));
+DeveMapearColunaDeCategoriaCorretamente(MapearColuna("categoria", "Bebidas"));
+DeveMapearColunaDeQuantidadeCorretamente(MapearColuna("quantidade", 50));
+DeveMapearColunaDePrecosCorretamente(MapearColuna("preco", 12.90));
+DeveRetornarErroAoMapearColunaObrigatoriaAusente(MapearColuna("nome", null));
+DeveRetornarErroAoMapearQuantidadeNegativa(MapearColuna("quantidade", -5));
+DeveRetornarErroAoMapearPrecoNegativo(MapearColuna("preco", -1.00));
+
+DeveValidarNomeDoProdutoPreenchido(ValidarNomeProduto("Café"));
+DeveRetornarErroQuandoNomeDoProdutoEstiverVazio(ValidarNomeProduto(""));
+DeveRetornarErroQuandoNomeDoProdutoEstiverNulo(ValidarNomeProduto(null));
+DeveValidarQuantidadePositiva(ValidarQuantidade(10));
+DeveRetornarErroQuandoQuantidadeForZero(ValidarQuantidade(0));
+DeveRetornarErroQuandoQuantidadeForNegativa(ValidarQuantidade(-3));

@@ -1,0 +1,35 @@
+// back/controllers/ImportacaoProdutoController
+
+ImportarPlanilha(arquivo){
+    if(arquivo == null)
+        return erro;
+    if(!ValidarFormatoArquivo(arquivo))
+        return erro;
+    var linhas = LerLinhasDaPlanilha(arquivo);
+    if(linhas == null || linhas.tamanho == 0)
+        return erro;
+    var resultado = ImportacaoProduto {};
+    resultado.totalLinhas = linhas.tamanho;
+    para cada linha em linhas:
+        var produto = MapearLinhaDaPlanilha(linha);
+        if(produto == erro)
+            resultado.totalErros = resultado.totalErros + 1;
+            resultado.erros.adicionar(linha.numero, produto.mensagemErro);
+            continue;
+        SalvarProdutoRepositorio(produto);
+        resultado.totalImportados = resultado.totalImportados + 1;
+    return resultado;
+}
+
+ValidarFormatoArquivo(arquivo){
+    if(arquivo.extensao != ".xlsx" && arquivo.extensao != ".xls")
+        return false;
+    return true;
+}
+
+LerLinhasDaPlanilha(arquivo){
+    var linhas = LerExcel(arquivo);
+    if(linhas == null)
+        return null;
+    return linhas;
+}

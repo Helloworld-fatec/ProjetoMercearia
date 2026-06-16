@@ -1,0 +1,9 @@
+// back/models/ImportacaoProduto
+
+ImportacaoProduto {
+    arquivo;
+    totalLinhas;
+    totalImportados;
+    totalErros;
+    erros[];
+}
