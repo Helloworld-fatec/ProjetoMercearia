@@ -1,0 +1,11 @@
+// front/componentes/IndicadorAtendimentosPendentes
+
+ExibirIndicadorPendentes(quantidade){
+    se(quantidade == 0)
+        renderizar(badge(cor=verde, label="Sem pendências"));
+        return;
+    se(quantidade <= 3)
+        renderizar(badge(cor=amarelo, label=quantidade + " pendente(s)"));
+        return;
+    renderizar(badge(cor=vermelho, label=quantidade + " pendente(s)"));
+}

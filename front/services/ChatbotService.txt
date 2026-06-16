@@ -1,0 +1,43 @@
+// front/services/ChatbotService
+
+ConsultarProdutoPorNome(telefone, termoBusca){
+    var resposta = ChamarAPI(RotaConsultarProdutoPorNomeViaWhatsApp(telefone, termoBusca));
+    se(resposta == erro)
+        return erro;
+    return resposta;
+}
+
+AcionarVendedor(mensagem){
+    var resposta = ChamarAPI(RotaAcionarVendedor(mensagem));
+    se(resposta == erro)
+        return erro;
+    return resposta;
+}
+
+AssumirHandoff(handoffId, vendedor){
+    var resposta = ChamarAPI(RotaAssumirHandoff(handoffId, vendedor));
+    se(resposta == erro)
+        return erro;
+    return resposta.handoff;
+}
+
+EncerrarHandoff(handoffId){
+    var resposta = ChamarAPI(RotaEncerrarHandoff(handoffId));
+    se(resposta == erro)
+        return erro;
+    return resposta.handoff;
+}
+
+ListarHandoffsAbertos(){
+    var resposta = ChamarAPI(RotaListarHandoffsAbertos());
+    se(resposta == erro)
+        return erro;
+    return resposta.handoffs;
+}
+
+ListarHandoffsEmAtendimento(){
+    var resposta = ChamarAPI(RotaListarHandoffsEmAtendimento());
+    se(resposta == erro)
+        return erro;
+    return resposta.handoffs;
+}

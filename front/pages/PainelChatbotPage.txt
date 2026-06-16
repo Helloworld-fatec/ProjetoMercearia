@@ -1,0 +1,56 @@
+// front/pages/PainelChatbotPage
+
+estado {
+    handoffsAbertos = [];
+    handoffsEmAtendimento = [];
+    handoffSelecionado = null;
+    atualizandoAutomaticamente = false;
+    intervaloAtualizacao = 30;
+}
+
+CarregarPagina(){
+    ExibirTitulo("Painel de Atendimento - Chatbot");
+    CarregarHandoffs();
+    IniciarAtualizacaoAutomatica();
+}
+
+CarregarHandoffs(){
+    var abertos = ListarHandoffsAbertos();
+    se(abertos == erro)
+        ExibirMensagemErro("Erro ao carregar atendimentos.");
+        return;
+    handoffsAbertos = abertos;
+    var emAtendimento = ListarHandoffsEmAtendimento();
+    se(emAtendimento != erro)
+        handoffsEmAtendimento = emAtendimento;
+    ExibirPainelHandoffs(handoffsAbertos, handoffsEmAtendimento);
+}
+
+IniciarAtualizacaoAutomatica(){
+    atualizandoAutomaticamente = true;
+    repetirACada(intervaloAtualizacao, CarregarHandoffs);
+}
+
+SelecionarHandoff(handoffId){
+    handoffSelecionado = handoffId;
+    ExibirDetalheHandoff(handoffSelecionado);
+}
+
+ConfirmarAssumirHandoff(handoffId, vendedor){
+    var resultado = AssumirHandoff(handoffId, vendedor);
+    se(resultado == erro)
+        ExibirMensagemErro("Erro ao assumir atendimento.");
+        return;
+    ExibirMensagemSucesso("Atendimento assumido!");
+    CarregarHandoffs();
+}
+
+ConfirmarEncerrarHandoff(handoffId){
+    var resultado = EncerrarHandoff(handoffId);
+    se(resultado == erro)
+        ExibirMensagemErro("Erro ao encerrar atendimento.");
+        return;
+    handoffSelecionado = null;
+    ExibirMensagemSucesso("Atendimento encerrado!");
+    CarregarHandoffs();
+}

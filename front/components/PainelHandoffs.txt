@@ -1,0 +1,27 @@
+// front/componentes/PainelHandoffs
+
+ExibirPainelHandoffs(handoffsAbertos, handoffsEmAtendimento){
+    ExibirSecaoHandoffs("Aguardando atendimento", handoffsAbertos, tipo="aberto");
+    ExibirSecaoHandoffs("Em atendimento", handoffsEmAtendimento, tipo="em_atendimento");
+}
+
+ExibirSecaoHandoffs(titulo, handoffs, tipo){
+    renderizar(titulo + " (" + handoffs.tamanho + ")");
+    se(handoffs.tamanho == 0)
+        renderizar("Nenhum atendimento.");
+        return;
+    para cada handoff em handoffs:
+        ExibirCardHandoff(handoff, tipo);
+}
+
+ExibirCardHandoff(handoff, tipo){
+    renderizar(handoff.nomeCliente);
+    renderizar(handoff.telefoneCliente);
+    renderizar(handoff.motivoHandoff);
+    renderizar(handoff.dataAbertura);
+    se(tipo == "aberto")
+        renderizar(botao("Assumir", onClick=ConfirmarAssumirHandoff(handoff.id, vendedorLogado)));
+    se(tipo == "em_atendimento")
+        renderizar(handoff.vendedorResponsavel);
+        renderizar(botao("Encerrar", onClick=ConfirmarEncerrarHandoff(handoff.id)));
+}
