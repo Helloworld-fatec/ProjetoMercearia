@@ -1,0 +1,8 @@
+// front/services/RankingClienteService
+
+BuscarRankingClientes(criterio, limite){
+    var resposta = ChamarAPI(RotaBuscarRankingClientes(criterio, limite));
+    if(resposta == erro)
+        return erro;
+    return resposta.clientes;
+}

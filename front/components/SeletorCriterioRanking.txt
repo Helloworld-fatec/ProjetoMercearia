@@ -1,0 +1,7 @@
+// front/componentes/SeletorCriterioRanking
+
+ExibirSeletorCriterio(onSelecionar){
+    renderizar(opcao("Mais compras", valor="quantidade_compras"));
+    renderizar(opcao("Maior valor gasto", valor="valor_total"));
+    onChange = onSelecionar;
+}

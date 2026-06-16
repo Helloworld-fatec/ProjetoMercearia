@@ -1,0 +1,39 @@
+// front/componentes/RankingClientes
+
+ExibirRankingClientes(clientes, criterio){
+    se(clientes.tamanho == 0)
+        ExibirMensagemSemClientes();
+        return;
+    var posicao = 1;
+    para cada cliente em clientes:
+        ExibirCardClienteRanking(cliente, posicao, criterio);
+        posicao = posicao + 1;
+}
+
+ExibirCardClienteRanking(cliente, posicao, criterio){
+    renderizar(posicao);
+    renderizar(cliente.nome);
+    renderizar(cliente.telefone);
+    se(criterio == "quantidade_compras")
+        renderizar("Compras: " + cliente.quantidadeCompras);
+    se(criterio == "valor_total")
+        renderizar("Total gasto: R$ " + cliente.valorTotalCompras);
+    ExibirMedalha(posicao);
+}
+
+ExibirMedalha(posicao){
+    se(posicao == 1)
+        renderizar(medalha(cor=ouro, label="1º"));
+        return;
+    se(posicao == 2)
+        renderizar(medalha(cor=prata, label="2º"));
+        return;
+    se(posicao == 3)
+        renderizar(medalha(cor=bronze, label="3º"));
+        return;
+    renderizar(posicao + "º");
+}
+
+ExibirMensagemSemClientes(){
+    renderizar("Nenhum cliente encontrado no ranking.");
+}
