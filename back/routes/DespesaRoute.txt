@@ -1,0 +1,5 @@
+// back/routes/DespesaRoute
+
+RotaRegistrarDespesa(despesa);
+RotaListarDespesas(dataInicio, dataFim);
+RotaExcluirDespesa(despesaId);

@@ -1,0 +1,5 @@
+// back/routes/RelatorioRoute
+
+RotaGerarRelatorioVendas(dataInicio, dataFim);
+RotaGerarRelatorioEstoque();
+RotaGerarRelatorioDespesas(dataInicio, dataFim);

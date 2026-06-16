@@ -1,0 +1,16 @@
+// back/models/RelatorioDespesas
+
+RelatorioDespesas {
+    dataInicio;
+    dataFim;
+    dataGeracao;
+    totalDespesas;
+    totalPorCategoria[];
+    despesas[];
+}
+
+TotalPorCategoria {
+    categoria;
+    total;
+    quantidade;
+}

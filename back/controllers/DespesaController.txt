@@ -1,0 +1,68 @@
+// back/controllers/DespesaController
+
+RegistrarDespesa(despesa){
+    if(despesa == null)
+        return erro;
+    if(!ValidarDescricaoDespesa(despesa.descricao))
+        return erro;
+    if(!ValidarValorDespesa(despesa.valor))
+        return erro;
+    if(!ValidarCategoriaDespesa(despesa.categoria))
+        return erro;
+    if(!ValidarDataDespesa(despesa.data))
+        return erro;
+    despesa.dataRegistro = ObterDataHoraAtual();
+    SalvarDespesaRepositorio(despesa);
+    return despesa;
+}
+
+ListarDespesas(dataInicio, dataFim){
+    if(dataInicio == null && dataFim == null)
+        return ListarTodasDespesasRepositorio();
+    if(dataInicio == null || dataFim == null)
+        return erro;
+    if(dataInicio > dataFim)
+        return erro;
+    var despesas = BuscarDespesasPorPeriodoRepositorio(dataInicio, dataFim);
+    if(despesas == null)
+        return listaVazia;
+    return despesas;
+}
+
+ExcluirDespesa(despesaId){
+    if(despesaId == null)
+        return erro;
+    var despesa = BuscarDespesaRepositorio(despesaId);
+    if(despesa == null)
+        return erro;
+    ExcluirDespesaRepositorio(despesaId);
+    return true;
+}
+
+ValidarDescricaoDespesa(descricao){
+    if(descricao == null || descricao == "")
+        return false;
+    return true;
+}
+
+ValidarValorDespesa(valor){
+    if(valor == null)
+        return false;
+    if(valor <= 0)
+        return false;
+    return true;
+}
+
+ValidarCategoriaDespesa(categoria){
+    if(categoria == null || categoria == "")
+        return false;
+    if(categoria != "fixo" && categoria != "variavel" && categoria != "imposto" && categoria != "outros")
+        return false;
+    return true;
+}
+
+ValidarDataDespesa(data){
+    if(data == null)
+        return false;
+    return true;
+}

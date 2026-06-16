@@ -1,0 +1,41 @@
+// back/controllers/RelatorioDespesasController
+
+GerarRelatorioDespesas(dataInicio, dataFim){
+    if(dataInicio == null || dataFim == null)
+        return erro;
+    if(dataInicio > dataFim)
+        return erro;
+    var despesas = BuscarDespesasPorPeriodoRepositorio(dataInicio, dataFim);
+    if(despesas == null)
+        despesas = [];
+    var relatorio = RelatorioDespesas {};
+    relatorio.dataInicio = dataInicio;
+    relatorio.dataFim = dataFim;
+    relatorio.dataGeracao = ObterDataHoraAtual();
+    relatorio.despesas = despesas;
+    relatorio.totalDespesas = 0;
+    relatorio.totalPorCategoria = [];
+    para cada despesa em despesas:
+        relatorio.totalDespesas = relatorio.totalDespesas + despesa.valor;
+        AcumularPorCategoria(relatorio, despesa.categoria, despesa.valor);
+    return relatorio;
+}
+
+AcumularPorCategoria(relatorio, categoria, valor){
+    var registro = BuscarRegistroPorCategoria(relatorio.totalPorCategoria, categoria);
+    if(registro == null)
+        registro = TotalPorCategoria {};
+        registro.categoria = categoria;
+        registro.total = 0;
+        registro.quantidade = 0;
+        relatorio.totalPorCategoria.adicionar(registro);
+    registro.total = registro.total + valor;
+    registro.quantidade = registro.quantidade + 1;
+}
+
+CalcularTotalDespesas(despesas){
+    var total = 0;
+    para cada despesa em despesas:
+        total = total + despesa.valor;
+    return total;
+}

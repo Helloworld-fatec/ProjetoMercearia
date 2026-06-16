@@ -1,0 +1,32 @@
+// back/controllers/RelatorioVendasController
+
+GerarRelatorioVendas(dataInicio, dataFim){
+    if(dataInicio == null || dataFim == null)
+        return erro;
+    if(dataInicio > dataFim)
+        return erro;
+    var vendas = BuscarVendasPorPeriodoRepositorio(dataInicio, dataFim);
+    if(vendas == null)
+        vendas = [];
+    var relatorio = RelatorioVendas {};
+    relatorio.dataInicio = dataInicio;
+    relatorio.dataFim = dataFim;
+    relatorio.dataGeracao = ObterDataHoraAtual();
+    relatorio.vendas = vendas;
+    relatorio.quantidadeVendas = 0;
+    relatorio.quantidadeCanceladas = 0;
+    relatorio.totalGeral = 0;
+    relatorio.totalDesconto = 0;
+    relatorio.totalLiquido = 0;
+    relatorio.totalPorFormaPagamento = [];
+    para cada venda em vendas:
+        if(venda.status == "cancelada")
+            relatorio.quantidadeCanceladas = relatorio.quantidadeCanceladas + 1;
+            continue;
+        relatorio.quantidadeVendas = relatorio.quantidadeVendas + 1;
+        relatorio.totalGeral = relatorio.totalGeral + venda.totalBruto;
+        relatorio.totalDesconto = relatorio.totalDesconto + venda.desconto;
+        relatorio.totalLiquido = relatorio.totalLiquido + venda.totalLiquido;
+        AcumularPorFormaPagamento(relatorio, venda.formaPagamento, venda.totalLiquido);
+    return relatorio;
+}

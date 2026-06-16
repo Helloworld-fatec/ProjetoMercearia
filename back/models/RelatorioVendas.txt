@@ -1,0 +1,15 @@
+// back/models/RelatorioVendas
+
+RelatorioVendas {
+    dataInicio;
+    dataFim;
+    dataGeracao;
+    totalGeral;
+    totalDesconto;
+    totalLiquido;
+    quantidadeVendas;
+    quantidadeCanceladas;
+    totalPorFormaPagamento[];
+    vendas[];
+}
+
