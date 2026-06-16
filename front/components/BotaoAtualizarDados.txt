@@ -1,0 +1,5 @@
+// front/componentes/BotaoAtualizarDados
+
+ExibirBotaoAtualizar(onAtualizar){
+    renderizar(botao("Atualizar", onClick=onAtualizar));
+}

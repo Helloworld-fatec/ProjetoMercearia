@@ -1,15 +1,35 @@
 // front/pages/ProdutosPage
 
-CarregarPagina(){
-    var produtos = BuscarTodosProdutos();
-    if(produtos == erro)
-        ExibirMensagemDeErro("Não foi possível carregar os produtos.");
-    ExibirListaDeProdutos(produtos);
+estado {
+    paginaAtual = 1;
+    limite = 10;
+    totalPaginas = 0;
+    filtroNome = "";
+    filtroCategoria = "";
 }
 
-AplicarFiltro(nome, categoria){
-    var produtos = BuscarProdutosPorFiltro(nome, categoria);
-    if(produtos == listaVazia)
-        ExibirMensagemSemResultados();
-    ExibirListaDeProdutos(produtos);
+CarregarPaginaAtual(){
+    var resposta = BuscarProdutosPaginados(paginaAtual, limite);
+    if(resposta == erro)
+        ExibirMensagemDeErro("Não foi possível carregar os produtos.");
+    totalPaginas = resposta.totalPaginas;
+    ExibirListaDeProdutos(resposta.produtos);
+    ExibirControlesDePaginacao(paginaAtual, totalPaginas);
+}
+
+AvancarPagina(){
+    if(paginaAtual < totalPaginas)
+        paginaAtual = paginaAtual + 1;
+    CarregarPaginaAtual();
+}
+
+VoltarPagina(){
+    if(paginaAtual > 1)
+        paginaAtual = paginaAtual - 1;
+    CarregarPaginaAtual();
+}
+
+AtualizarDados(){
+    paginaAtual = 1;
+    CarregarPaginaAtual();
 }
