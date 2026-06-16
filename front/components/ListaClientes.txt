@@ -1,0 +1,11 @@
+// front/componentes/ListaClientes
+
+ExibirListaClientes(clientes){
+    se(clientes.tamanho == 0)
+        renderizar("Nenhum cliente cadastrado.");
+        return;
+    para cada cliente em clientes:
+        renderizar(cliente.nome);
+        renderizar(cliente.telefone);
+        renderizar(cliente.email);
+}

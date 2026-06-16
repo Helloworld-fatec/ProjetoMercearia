@@ -1,0 +1,12 @@
+// front/componentes/TabelaConfiguracaoEstoque
+
+ExibirTabelaConfiguracaoEstoque(produtos, onSalvar){
+    se(produtos.tamanho == 0)
+        renderizar("Nenhum produto cadastrado.");
+        return;
+    para cada produto em produtos:
+        renderizar(produto.nome);
+        renderizar(produto.categoria);
+        renderizar(produto.quantidade);
+        renderizar(inputEstoqueMinimo(valor=produto.estoqueMinimo, produtoId=produto.id, onSalvar=onSalvar));
+}

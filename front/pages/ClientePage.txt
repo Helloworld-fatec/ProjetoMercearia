@@ -1,0 +1,54 @@
+front/pages/CadastroClientePage
+
+estado {
+    nome = "";
+    telefone = "";
+    email = "";
+    clientes = [];
+}
+
+CarregarPagina(){
+    ExibirTitulo("Cadastro de Clientes");
+    ExibirFormularioCadastro(onSubmit = ConfirmarCadastro);
+    CarregarListaClientes();
+}
+
+CarregarListaClientes(){
+    var clientes = BuscarClientes();
+    if(clientes == erro)
+        ExibirMensagemErro("Erro ao carregar clientes.");
+        return;
+    clientes = clientes;
+    ExibirListaClientes(clientes);
+}
+
+ConfirmarCadastro(){
+    if(nome == null || nome == "")
+        ExibirMensagemErro("Nome é obrigatório.");
+        return;
+    if(telefone == null || telefone == "")
+        ExibirMensagemErro("Telefone é obrigatório.");
+        return;
+    var cliente = MontarCliente();
+    var resultado = CadastrarCliente(cliente);
+    if(resultado == erro)
+        ExibirMensagemErro("Erro ao cadastrar cliente.");
+        return;
+    ExibirMensagemSucesso("Cliente cadastrado com sucesso!");
+    LimparFormulario();
+    CarregarListaClientes();
+}
+
+MontarCliente(){
+    var cliente = Cliente {};
+    cliente.nome = nome;
+    cliente.telefone = telefone;
+    cliente.email = email;
+    return cliente;
+}
+
+LimparFormulario(){
+    nome = "";
+    telefone = "";
+    email = "";
+}

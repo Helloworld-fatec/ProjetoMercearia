@@ -1,0 +1,14 @@
+front/componentes/FormularioAjusteEstoque
+
+ExibirFormularioAjuste(onSubmit){
+    ExibirSeletorTipoAjuste(onSelecionar = DefinirTipoAjuste);
+    input(label="Quantidade", tipo=numero, onChange=DefinirQuantidade);
+    input(label="Motivo", tipo=texto, onChange=DefinirMotivo);
+    renderizar(botao("Registrar Ajuste", onClick=onSubmit));
+}
+
+ExibirSeletorTipoAjuste(onSelecionar){
+    renderizar(opcao("Perda", valor="perda"));
+    renderizar(opcao("Devolução", valor="devolucao"));
+    onChange = onSelecionar;
+}

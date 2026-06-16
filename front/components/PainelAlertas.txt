@@ -1,0 +1,12 @@
+// front/componentes/PainelAlertas
+
+ExibirPainelAlertas(alertas, onResolver){
+    se(alertas.tamanho == 0)
+        renderizar("Nenhum alerta ativo.");
+        return;
+    para cada alerta em alertas:
+        renderizar(alerta.nomeProduto);
+        renderizar("Qtd atual: " + alerta.quantidadeAtual);
+        renderizar("Mínimo: " + alerta.estoqueMinimo);
+        renderizar(botaoResolver(onClick = onResolver(alerta.id)));
+}

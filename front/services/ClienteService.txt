@@ -1,0 +1,22 @@
+front/services/ClienteService
+
+CadastrarCliente(cliente){
+    var resposta = ChamarAPI(RotaCadastrarCliente(cliente));
+    if(resposta == erro)
+        return erro;
+    return resposta.cliente;
+}
+
+BuscarClientes(){
+    var resposta = ChamarAPI(RotaListarClientes());
+    if(resposta == erro)
+        return erro;
+    return resposta.clientes;
+}
+
+BuscarClientePorId(clienteId){
+    var resposta = ChamarAPI(RotaBuscarClientePorId(clienteId));
+    if(resposta == erro)
+        return erro;
+    return resposta.cliente;
+}

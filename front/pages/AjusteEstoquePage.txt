@@ -1,0 +1,75 @@
+front/pages/AjusteEstoquePage
+
+estado {
+    produtos = [];
+    produtoSelecionado = null;
+    tipoAjuste = null;
+    quantidade = 0;
+    motivo = "";
+    historicoAjustes = [];
+}
+
+CarregarPagina(){
+    ExibirTitulo("Ajuste Manual de Estoque");
+    CarregarProdutos();
+    ExibirFormularioAjuste(onSubmit = ConfirmarAjuste);
+    ExibirHistoricoAjustes([]);
+}
+
+CarregarProdutos(){
+    var produtos = BuscarProdutos();
+    if(produtos == erro)
+        ExibirMensagemErro("Erro ao carregar produtos.");
+        return;
+    produtos = produtos;
+    ExibirSeletorProduto(produtos, onSelecionar = SelecionarProduto);
+}
+
+SelecionarProduto(produtoId){
+    produtoSelecionado = BuscarProdutoPorId(produtoId);
+    CarregarHistorico(produtoId);
+}
+
+CarregarHistorico(produtoId){
+    var historico = ListarHistoricoAjustes(produtoId);
+    if(historico == erro)
+        ExibirMensagemErro("Erro ao carregar histórico.");
+        return;
+    historicoAjustes = historico;
+    ExibirHistoricoAjustes(historicoAjustes);
+}
+
+ConfirmarAjuste(){
+    if(produtoSelecionado == null)
+        ExibirMensagemErro("Selecione um produto.");
+        return;
+    if(tipoAjuste == null)
+        ExibirMensagemErro("Selecione o tipo de ajuste.");
+        return;
+    if(quantidade <= 0)
+        ExibirMensagemErro("Quantidade deve ser maior que zero.");
+        return;
+    var ajuste = MontarAjuste();
+    var resultado = RegistrarAjusteEstoque(ajuste);
+    if(resultado == erro)
+        ExibirMensagemErro("Erro ao registrar ajuste.");
+        return;
+    ExibirMensagemSucesso("Ajuste registrado com sucesso!");
+    LimparFormulario();
+    CarregarHistorico(produtoSelecionado.id);
+}
+
+MontarAjuste(){
+    var ajuste = AjusteEstoque {};
+    ajuste.produtoId = produtoSelecionado.id;
+    ajuste.quantidade = quantidade;
+    ajuste.tipo = tipoAjuste;
+    ajuste.motivo = motivo;
+    return ajuste;
+}
+
+LimparFormulario(){
+    tipoAjuste = null;
+    quantidade = 0;
+    motivo = "";
+}

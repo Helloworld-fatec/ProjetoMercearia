@@ -1,0 +1,51 @@
+// front/pages/ConfiguracaoEstoquePage
+
+estado {
+    produtos = [];
+    alertasAtivos = [];
+}
+
+CarregarPagina(){
+    ExibirTitulo("Configuração de Estoque Mínimo");
+    CarregarProdutos();
+    CarregarAlertas();
+}
+
+CarregarProdutos(){
+    var produtos = BuscarProdutosComEstoqueMinimo();
+    if(produtos == erro)
+        ExibirMensagemErro("Erro ao carregar produtos.");
+        return;
+    produtos = produtos;
+    ExibirTabelaConfiguracaoEstoque(produtos, onSalvar = SalvarEstoqueMinimo);
+}
+
+CarregarAlertas(){
+    var alertas = BuscarAlertasAtivos();
+    if(alertas == erro)
+        ExibirMensagemErro("Erro ao carregar alertas.");
+        return;
+    alertasAtivos = alertas;
+    ExibirPainelAlertas(alertasAtivos, onResolver = ConfirmarResolverAlerta);
+}
+
+SalvarEstoqueMinimo(produtoId, estoqueMinimo){
+    if(estoqueMinimo < 0)
+        ExibirMensagemErro("Estoque mínimo não pode ser negativo.");
+        return;
+    var resultado = AtualizarEstoqueMinimo(produtoId, estoqueMinimo);
+    if(resultado == erro)
+        ExibirMensagemErro("Erro ao salvar estoque mínimo.");
+        return;
+    ExibirMensagemSucesso("Estoque mínimo atualizado!");
+    CarregarProdutos();
+}
+
+ConfirmarResolverAlerta(alertaId){
+    var resultado = ResolverAlerta(alertaId);
+    if(resultado == erro)
+        ExibirMensagemErro("Erro ao resolver alerta.");
+        return;
+    ExibirMensagemSucesso("Alerta resolvido!");
+    CarregarAlertas();
+}

@@ -1,0 +1,8 @@
+// front/componentes/FormularioCadastroCliente
+
+ExibirFormularioCadastro(onSubmit){
+    input(label="Nome", tipo=texto, obrigatorio=true, onChange=DefinirNome);
+    input(label="Telefone", tipo=texto, obrigatorio=true, onChange=DefinirTelefone);
+    input(label="E-mail", tipo=email, obrigatorio=false, onChange=DefinirEmail);
+    renderizar(botao("Cadastrar Cliente", onClick=onSubmit));
+}
