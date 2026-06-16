@@ -1,0 +1,28 @@
+// front/componentes/CardClienteRankingDetalhado
+
+ExibirCardClienteRankingDetalhado(cliente, posicao){
+    renderizar(posicaoDestaque(posicao));
+    renderizar(nomeCliente(cliente.nome));
+    renderizar(telefoneCliente(cliente.telefone));
+    ExibirEstatisticasCliente(cliente);
+    ExibirBarraProgressoCompras(cliente.quantidadeCompras, maximo=cliente.quantidadeComprasLider);
+}
+
+ExibirEstatisticasCliente(cliente){
+    renderizar(estatistica(label="Total de compras", valor=cliente.quantidadeCompras));
+    renderizar(estatistica(label="Valor total gasto", valor="R$ " + cliente.valorTotalCompras));
+    renderizar(estatistica(label="Ticket médio", valor="R$ " + CalcularTicketMedio(cliente)));
+}
+
+CalcularTicketMedio(cliente){
+    se(cliente.quantidadeCompras == 0)
+        return 0;
+    return cliente.valorTotalCompras / cliente.quantidadeCompras;
+}
+
+ExibirBarraProgressoCompras(quantidadeCompras, maximo){
+    se(maximo == 0)
+        return;
+    var percentual = (quantidadeCompras / maximo) * 100;
+    renderizar(barraProgresso(percentual=percentual));
+}

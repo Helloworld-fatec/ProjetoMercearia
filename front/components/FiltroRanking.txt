@@ -1,0 +1,13 @@
+// front/componentes/FiltroRanking
+
+ExibirFiltroRanking(criterio, limite, onAlterarCriterio, onAlterarLimite){
+    ExibirSeletorCriterio(criterio, onAlterarCriterio);
+    ExibirSeletorLimite(limite, onAlterarLimite);
+}
+
+ExibirSeletorLimite(limite, onAlterarLimite){
+    renderizar(opcao("Top 5", valor=5));
+    renderizar(opcao("Top 10", valor=10));
+    renderizar(opcao("Top 20", valor=20));
+    onChange = onAlterarLimite;
+}

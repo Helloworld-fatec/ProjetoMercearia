@@ -1,0 +1,9 @@
+// front/componentes/CardDespesa
+
+ExibirCardDespesa(despesa, onExcluir){
+    renderizar(despesa.data);
+    renderizar(despesa.descricao);
+    renderizar(BadgeCategoria(despesa.categoria));
+    renderizar("R$ " + despesa.valor);
+    renderizar(botaoExcluir(onClick = onExcluir(despesa.id)));
+}

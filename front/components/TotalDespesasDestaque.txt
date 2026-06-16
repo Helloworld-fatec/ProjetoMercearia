@@ -1,0 +1,11 @@
+// front/componentes/TotalDespesasDestaque
+
+ExibirTotalDespesasDestaque(total){
+    se(total == 0)
+        renderizar(totalDestaque(valor="R$ 0,00", cor=cinza));
+        return;
+    se(total > 5000)
+        renderizar(totalDestaque(valor="R$ " + total, cor=vermelho));
+        return;
+    renderizar(totalDestaque(valor="R$ " + total, cor=amarelo));
+}

@@ -1,0 +1,27 @@
+// front/componentes/PodioRanking
+
+ExibirPodioRanking(clientes){
+    se(clientes == null || clientes.tamanho == 0)
+        return;
+    var top3 = clientes.primeiros(3);
+    renderizar(secaoPodio(
+        primeiro = top3[0],
+        segundo = top3[1],
+        terceiro = top3[2]
+    ));
+}
+
+ExibirColunaPodio(cliente, posicao){
+    se(cliente == null)
+        renderizar(colunaVazia(posicao));
+        return;
+    se(posicao == 1)
+        renderizar(coluna(altura=grande, cor=ouro, cliente=cliente, icone="🥇"));
+        return;
+    se(posicao == 2)
+        renderizar(coluna(altura=media, cor=prata, cliente=cliente, icone="🥈"));
+        return;
+    se(posicao == 3)
+        renderizar(coluna(altura=pequena, cor=bronze, cliente=cliente, icone="🥉"));
+        return;
+}

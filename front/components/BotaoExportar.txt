@@ -1,0 +1,8 @@
+// front/componentes/BotaoExportar
+
+ExibirBotaoExportar(desabilitado, exportando, onExportar){
+    se(exportando)
+        renderizar(botao("Gerando...", desabilitado=true));
+        return;
+    renderizar(botao("Exportar Relatório", desabilitado=desabilitado, onClick=onExportar));
+}

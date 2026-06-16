@@ -1,0 +1,8 @@
+// front/componentes/FiltroDataDespesas
+
+ExibirFiltroDataDespesas(dataInicio, dataFim, onFiltrar){
+    input(label="De", tipo=data, valor=dataInicio, onChange=DefinirDataInicio);
+    input(label="Até", tipo=data, valor=dataFim, onChange=DefinirDataFim);
+    renderizar(botao("Filtrar", onClick=onFiltrar));
+    renderizar(botao("Limpar filtro", onClick=LimparFiltro));
+}

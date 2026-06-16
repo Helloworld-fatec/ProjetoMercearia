@@ -1,0 +1,32 @@
+// front/componentes/ResumoDespesasPorCategoria
+
+ExibirResumoDespesasPorCategoria(despesas){
+    se(despesas == null || despesas.tamanho == 0)
+        renderizar("Nenhuma despesa registrada.");
+        return;
+    var totaisPorCategoria = AgruparPorCategoria(despesas);
+    para cada registro em totaisPorCategoria:
+        renderizar(BadgeCategoria(registro.categoria));
+        renderizar(registro.quantidade + " despesas");
+        renderizar("R$ " + registro.total);
+}
+
+AgruparPorCategoria(despesas){
+    var grupos = {};
+    para cada despesa em despesas:
+        se(grupos[despesa.categoria] == null)
+            grupos[despesa.categoria] = { total=0, quantidade=0 };
+        grupos[despesa.categoria].total = grupos[despesa.categoria].total + despesa.valor;
+        grupos[despesa.categoria].quantidade = grupos[despesa.categoria].quantidade + 1;
+    return grupos;
+}
+
+BadgeCategoria(categoria){
+    se(categoria == "fixo")
+        return badge(cor=azul, label="Fixo");
+    se(categoria == "variavel")
+        return badge(cor=laranja, label="Variável");
+    se(categoria == "imposto")
+        return badge(cor=vermelho, label="Imposto");
+    return badge(cor=cinza, label="Outros");
+}

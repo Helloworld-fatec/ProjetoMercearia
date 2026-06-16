@@ -1,0 +1,6 @@
+// front/componentes/IndicadorCarregandoRelatorio
+
+ExibirCarregandoRelatorio(){
+    renderizar(spinner());
+    renderizar("Gerando relatório, aguarde...");
+}

@@ -1,0 +1,8 @@
+// front/componentes/SeletorPeriodoRelatorio
+
+ExibirSeletorPeriodo(dataInicio, dataFim, onAlterarInicio, onAlterarFim){
+    input(label="Data início", tipo=data, valor=dataInicio, onChange=onAlterarInicio);
+    input(label="Data fim", tipo=data, valor=dataFim, onChange=onAlterarFim);
+    se(dataInicio != null && dataFim != null && dataInicio > dataFim)
+        renderizar(aviso("Data início não pode ser maior que data fim."));
+}

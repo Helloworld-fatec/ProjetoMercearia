@@ -1,0 +1,49 @@
+// front/componentes/PreviewRelatorio
+
+ExibirPreviewRelatorioVendas(relatorio){
+    se(relatorio == null)
+        renderizar("Nenhum dado disponível para prévia.");
+        return;
+    renderizar(secao("Período: " + relatorio.dataInicio + " até " + relatorio.dataFim));
+    renderizar(secao("Total de vendas: " + relatorio.quantidadeVendas));
+    renderizar(secao("Total geral: R$ " + relatorio.totalGeral));
+    renderizar(secao("Total de descontos: R$ " + relatorio.totalDesconto));
+    renderizar(secao("Total líquido: R$ " + relatorio.totalLiquido));
+    ExibirTabelaPreviewPorFormaPagamento(relatorio.totalPorFormaPagamento);
+}
+
+ExibirPreviewRelatorioEstoque(relatorio){
+    se(relatorio == null)
+        renderizar("Nenhum dado disponível para prévia.");
+        return;
+    renderizar(secao("Total de produtos: " + relatorio.totalProdutos));
+    renderizar(secao("Total de itens em estoque: " + relatorio.totalItensEmEstoque));
+    renderizar(secao("Produtos abaixo do mínimo: " + relatorio.totalProdutosAbaixoMinimo));
+}
+
+ExibirPreviewRelatorioDespesas(relatorio){
+    se(relatorio == null)
+        renderizar("Nenhum dado disponível para prévia.");
+        return;
+    renderizar(secao("Período: " + relatorio.dataInicio + " até " + relatorio.dataFim));
+    renderizar(secao("Total de despesas: R$ " + relatorio.totalDespesas));
+    ExibirTabelaPreviewPorCategoria(relatorio.totalPorCategoria);
+}
+
+ExibirTabelaPreviewPorFormaPagamento(totais){
+    se(totais == null || totais.tamanho == 0)
+        return;
+    para cada registro em totais:
+        renderizar(registro.formaPagamento);
+        renderizar(registro.quantidadeVendas + " vendas");
+        renderizar("R$ " + registro.total);
+}
+
+ExibirTabelaPreviewPorCategoria(totais){
+    se(totais == null || totais.tamanho == 0)
+        return;
+    para cada registro em totais:
+        renderizar(registro.categoria);
+        renderizar(registro.quantidade + " despesas");
+        renderizar("R$ " + registro.total);
+}

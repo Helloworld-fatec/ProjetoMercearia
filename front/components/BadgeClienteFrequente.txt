@@ -1,0 +1,13 @@
+// front/componentes/BadgeClienteFrequente
+
+ExibirBadgeClienteFrequente(quantidadeCompras){
+    se(quantidadeCompras >= 20)
+        renderizar(badge(cor=ouro, label="Cliente VIP"));
+        return;
+    se(quantidadeCompras >= 10)
+        renderizar(badge(cor=prata, label="Cliente Frequente"));
+        return;
+    se(quantidadeCompras >= 5)
+        renderizar(badge(cor=bronze, label="Cliente Regular"));
+        return;
+}
