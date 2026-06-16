@@ -1,0 +1,21 @@
+// front/componentes/DetalheHandoff
+
+ExibirDetalheHandoff(handoff){
+    se(handoff == null)
+        renderizar("Selecione um atendimento.");
+        return;
+    renderizar(handoff.nomeCliente);
+    renderizar(handoff.telefoneCliente);
+    renderizar("Aberto em: " + handoff.dataAbertura);
+    ExibirHistoricoMensagens(handoff.historicoMensagens);
+}
+
+ExibirHistoricoMensagens(mensagens){
+    se(mensagens == null || mensagens.tamanho == 0)
+        renderizar("Sem histórico de mensagens.");
+        return;
+    para cada mensagem em mensagens:
+        renderizar(mensagem.dataHora);
+        renderizar(mensagem.conteudo);
+        renderizar(badge(tipo=mensagem.tipo));
+}

@@ -1,0 +1,62 @@
+// front/pages/ConfiguracaoChatbotPage
+
+estado {
+    configuracoes = [];
+    configuracaoEmEdicao = null;
+    salvando = false;
+}
+
+CarregarPagina(){
+    ExibirTitulo("Configuração de Respostas Automáticas");
+    CarregarConfiguracoes();
+}
+
+CarregarConfiguracoes(){
+    var configuracoes = ListarConfiguracoes();
+    se(configuracoes == erro)
+        ExibirMensagemErro("Erro ao carregar configurações.");
+        return;
+    configuracoes = configuracoes;
+    ExibirListaConfiguracoes(configuracoes);
+}
+
+IniciarEdicao(configuracao){
+    configuracaoEmEdicao = configuracao;
+    ExibirFormularioEdicao(configuracaoEmEdicao, onSalvar = ConfirmarAtualizacao, onCancelar = CancelarEdicao);
+}
+
+ConfirmarAtualizacao(id, conteudo, ativo){
+    se(conteudo == null || conteudo == "")
+        ExibirMensagemErro("O conteúdo não pode estar vazio.");
+        return;
+    salvando = true;
+    var resultado = AtualizarConfiguracao(id, conteudo, ativo);
+    salvando = false;
+    se(resultado == erro)
+        ExibirMensagemErro("Erro ao salvar configuração.");
+        return;
+    configuracaoEmEdicao = null;
+    ExibirMensagemSucesso("Configuração salva!");
+    CarregarConfiguracoes();
+}
+
+ToggleAtivo(id, ativo){
+    var resultado = AtivarDesativarConfiguracao(id, ativo);
+    se(resultado == erro)
+        ExibirMensagemErro("Erro ao alterar status.");
+        return;
+    CarregarConfiguracoes();
+}
+
+ConfirmarRestaurarPadrao(id){
+    var resultado = RestaurarConfiguracaoPadrao(id);
+    se(resultado == erro)
+        ExibirMensagemErro("Erro ao restaurar texto padrão.");
+        return;
+    ExibirMensagemSucesso("Texto restaurado para o padrão!");
+    CarregarConfiguracoes();
+}
+
+CancelarEdicao(){
+    configuracaoEmEdicao = null;
+}
