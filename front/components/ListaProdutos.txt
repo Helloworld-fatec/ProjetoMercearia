@@ -1,0 +1,21 @@
+// front/componentes/ListaProdutos
+
+ExibirListaDeProdutos(produtos){
+    para cada produto em produtos:
+        ExibirCardProduto(produto.nome, produto.categoria, produto.quantidade, produto.preço);
+}
+
+ExibirCardProduto(nome, categoria, quantidade, preço){
+    renderizar(nome);
+    renderizar(categoria);
+    renderizar(quantidade);
+    renderizar(preço);
+}
+
+ExibirMensagemSemResultados(){
+    renderizar("Nenhum produto encontrado.");
+}
+
+ExibirMensagemDeErro(mensagem){
+    renderizar(mensagem);
+}

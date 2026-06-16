@@ -1,0 +1,15 @@
+// front/pages/ProdutosPage
+
+CarregarPagina(){
+    var produtos = BuscarTodosProdutos();
+    if(produtos == erro)
+        ExibirMensagemDeErro("Não foi possível carregar os produtos.");
+    ExibirListaDeProdutos(produtos);
+}
+
+AplicarFiltro(nome, categoria){
+    var produtos = BuscarProdutosPorFiltro(nome, categoria);
+    if(produtos == listaVazia)
+        ExibirMensagemSemResultados();
+    ExibirListaDeProdutos(produtos);
+}
