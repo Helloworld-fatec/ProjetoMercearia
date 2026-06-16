@@ -1,0 +1,9 @@
+// front/componentes/ConfirmacaoRestauracao
+
+ExibirConfirmacaoRestauracao(configuracao, onConfirmar, onCancelar){
+    renderizar(titulo("Restaurar texto padrão?"));
+    renderizar(aviso("O texto atual será substituído pelo original. Esta ação não pode ser desfeita."));
+    renderizar(textoAtual("Texto atual: " + configuracao.conteudo));
+    renderizar(botao("Sim, restaurar", cor=vermelho, onClick=onConfirmar));
+    renderizar(botao("Cancelar", cor=cinza, onClick=onCancelar));
+}

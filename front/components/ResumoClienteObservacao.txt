@@ -1,0 +1,12 @@
+// front/componentes/ResumoClienteObservacao
+
+ExibirResumoCliente(cliente){
+    renderizar(nomeCliente(cliente.nome));
+    renderizar(telefoneCliente(cliente.telefone));
+    se(cliente.email != null && cliente.email != "")
+        renderizar(emailCliente(cliente.email));
+    renderizar(estatistica(label="Total de compras", valor=cliente.quantidadeCompras));
+    renderizar(estatistica(label="Valor total gasto", valor="R$ " + cliente.valorTotalCompras));
+    renderizar(estatistica(label="Última compra", valor=cliente.dataUltimaCompra));
+}
+

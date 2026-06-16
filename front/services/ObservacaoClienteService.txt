@@ -1,0 +1,22 @@
+// front/services/ObservacaoClienteService
+
+BuscarObservacoesPorCliente(clienteId){
+    var resposta = ChamarAPI(RotaBuscarObservacoesPorCliente(clienteId));
+    se(resposta == erro)
+        return erro;
+    return resposta.observacoes;
+}
+
+AdicionarObservacao(clienteId, observacao){
+    var resposta = ChamarAPI(RotaAdicionarObservacao(clienteId, observacao));
+    se(resposta == erro)
+        return erro;
+    return resposta.observacao;
+}
+
+ExcluirObservacao(observacaoId){
+    var resposta = ChamarAPI(RotaExcluirObservacao(observacaoId));
+    se(resposta == erro)
+        return erro;
+    return true;
+}

@@ -1,0 +1,54 @@
+// front/pages/ObservacaoClientePage
+
+estado {
+    cliente = null;
+    observacoes = [];
+    novaObservacao = "";
+    modoEdicao = false;
+}
+
+CarregarPagina(clienteId){
+    var cliente = BuscarClientePorId(clienteId);
+    se(cliente == erro)
+        ExibirMensagemErro("Cliente não encontrado.");
+        return;
+    cliente = cliente;
+    ExibirTitulo("Observações — " + cliente.nome);
+    ExibirResumoCliente(cliente);
+    CarregarObservacoes(clienteId);
+    ExibirFormularioNovaObservacao(onSubmit = ConfirmarAdicionarObservacao);
+}
+
+CarregarObservacoes(clienteId){
+    var observacoes = BuscarObservacoesPorCliente(clienteId);
+    se(observacoes == erro)
+        ExibirMensagemErro("Erro ao carregar observações.");
+        return;
+    observacoes = observacoes;
+    se(observacoes.tamanho == 0)
+        ExibirMensagemSemObservacoes();
+        return;
+    ExibirListaObservacoes(observacoes, onExcluir = ConfirmarExcluirObservacao);
+}
+
+ConfirmarAdicionarObservacao(){
+    se(novaObservacao == null || novaObservacao == "")
+        ExibirMensagemErro("A observação não pode estar vazia.");
+        return;
+    var resultado = AdicionarObservacao(cliente.id, novaObservacao);
+    se(resultado == erro)
+        ExibirMensagemErro("Erro ao adicionar observação.");
+        return;
+    novaObservacao = "";
+    ExibirMensagemSucesso("Observação adicionada!");
+    CarregarObservacoes(cliente.id);
+}
+
+ConfirmarExcluirObservacao(observacaoId){
+    var resultado = ExcluirObservacao(observacaoId);
+    se(resultado == erro)
+        ExibirMensagemErro("Erro ao excluir observação.");
+        return;
+    ExibirMensagemSucesso("Observação removida.");
+    CarregarObservacoes(cliente.id);
+}

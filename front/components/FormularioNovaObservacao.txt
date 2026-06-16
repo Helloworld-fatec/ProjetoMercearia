@@ -1,0 +1,13 @@
+// front/componentes/FormularioNovaObservacao
+
+ExibirFormularioNovaObservacao(onSubmit){
+    renderizar(titulo("Nova observação"));
+    textarea(
+        placeholder="Ex: Cliente prefere pagamento via Pix. Tem alergia a amendoim. Sempre compra às sextas...",
+        linhas=3,
+        maxCaracteres=300,
+        onChange=DefinirNovaObservacao
+    );
+    ExibirContadorCaracteres(novaObservacao, maximo=300);
+    renderizar(botao("Adicionar observação", onClick=onSubmit));
+}

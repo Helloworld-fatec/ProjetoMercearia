@@ -1,0 +1,8 @@
+// front/componentes/BotaoAcessarObservacoes
+
+ExibirBotaoAcessarObservacoes(clienteId, quantidadeObservacoes){
+    se(quantidadeObservacoes == 0)
+        renderizar(botao("📝 Adicionar observação", onClick=AbrirTelaObservacoes(clienteId)));
+        return;
+    renderizar(botao("📝 Ver observações (" + quantidadeObservacoes + ")", onClick=AbrirTelaObservacoes(clienteId)));
+}

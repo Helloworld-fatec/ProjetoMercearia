@@ -1,0 +1,25 @@
+// front/componentes/EditorRespostaNoCode
+
+ExibirEditorRespostaNoCode(configuracao, onAlterar){
+    renderizar(titulo("✏️ Editando resposta: " + configuracao.descricao));
+    renderizar(dica("Use linguagem simples e amigável. Evite jargões técnicos."));
+    textarea(
+        valor=configuracao.conteudo,
+        linhas=5,
+        maxCaracteres=500,
+        placeholder="Digite aqui o texto que o bot vai enviar...",
+        onChange=onAlterar
+    );
+    ExibirContadorCaracteres(configuracao.conteudo, maximo=500);
+    ExibirPreviewRespostaBot(configuracao);
+}
+
+ExibirContadorCaracteres(conteudo, maximo){
+    var quantidade = conteudo.tamanho;
+    var cor = cinza;
+    se(quantidade > maximo * 0.8)
+        cor = amarelo;
+    se(quantidade >= maximo)
+        cor = vermelho;
+    renderizar(texto(quantidade + "/" + maximo + " caracteres", cor=cor));
+}

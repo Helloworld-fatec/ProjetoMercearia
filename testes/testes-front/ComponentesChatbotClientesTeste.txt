@@ -1,0 +1,35 @@
+testes/testes-front/ComponentesChatbotClientesTeste
+
+DeveRenderizarPreviewRespostaBotComConteudo(RenderizarPreviewRespostaBot({ conteudo="Olá! Bem-vindo.", tipo="bot" }));
+DeveNaoRenderizarPreviewQuandoConfiguracaoForNula(RenderizarPreviewRespostaBot(null));
+DeveRenderizarPreviewComparativoComConteudoAnteriENovoConteudo(RenderizarPreviewComparativo({ conteudoAntigo="Olá!", conteudoNovo="Olá! Bem-vindo à loja!" }));
+
+DeveRenderizarEditorComValorAtual(RenderizarEditorRespostaNoCode({ conteudo="Olá!", descricao="Saudação inicial" }));
+DeveExibirContadorCaracteresNormal(VerificarContadorCaracteres({ conteudo="Olá", maximo=500, corEsperada=cinza }));
+DeveExibirContadorCaracteresEmAlertaAcimaDeOitenaPorcento(VerificarContadorCaracteres({ conteudo=TextoCom401Chars, maximo=500, corEsperada=amarelo }));
+DeveExibirContadorCaracteresEmErroNoLimite(VerificarContadorCaracteres({ conteudo=TextoCom500Chars, maximo=500, corEsperada=vermelho }));
+
+DeveRenderizarPainelStatusComTotalAtivas(RenderizarPainelStatus([{ ativo=true }, { ativo=true }, { ativo=false }]));
+DeveExibirAvisoQuandoHouverConfiguracoesInativas(VerificarAvisoInativas([{ ativo=true }, { ativo=false }]));
+DeveNaoExibirAvisoQuandoTodasEstiveremAtivas(VerificarAvisoInativas([{ ativo=true }, { ativo=true }]));
+
+DeveRenderizarGuiaDeChatbotComCincoItens(VerificarItensGuia(quantidadeEsperada=5));
+
+DeveRenderizarConfirmacaoDeRestauracaoComBotoes(RenderizarConfirmacaoRestauracao({ conteudo="Texto atual aqui" }));
+DeveDisparararOnConfirmarAoClicarSimRestaurar(SimularClique(botao="Sim, restaurar", onConfirmarChamado=true));
+DeveDispararOnCancelarAoClicarCancelar(SimularClique(botao="Cancelar", onCancelarChamado=true));
+
+DeveRenderizarResumoClienteComTodosOsDados(RenderizarResumoCliente({ nome="João", telefone="11999999999", email="joao@email.com", quantidadeCompras=5, valorTotalCompras=250.00, dataUltimaCompra="2024-01-10" }));
+DeveRenderizarResumoClienteSemEmailQuandoEmailForVazio(RenderizarResumoCliente({ nome="João", telefone="11999999999", email="" }));
+
+DeveRenderizarListaDeObservacoesComItens(RenderizarListaObservacoes([{ conteudo="Prefere Pix", dataHora="2024-01-10", autor="Maria" }]));
+DeveRenderizarMensagemSemObservacoesQuandoListaVazia(RenderizarListaObservacoes([]));
+DeveRenderizarCardDeObservacaoComBotaoExcluir(RenderizarCardObservacao({ conteudo="Prefere Pix", dataHora="2024-01-10", autor="Maria" }));
+DeveDispararOnExcluirAoClicarBotaoExcluir(SimularClique(botao="excluir", observacaoId=1, onExcluirChamado=true));
+
+DeveRenderizarFormularioDeNovaObservacaoComTextarea(RenderizarFormularioNovaObservacao());
+DeveExibirBotaoAdicionarObservacaoQuandoSemObservacoes(RenderizarBotaoAcessarObservacoes({ clienteId=1, quantidadeObservacoes=0 }));
+DeveExibirBotaoVerObservacoesComContagemQuandoHouverObservacoes(RenderizarBotaoAcessarObservacoes({ clienteId=1, quantidadeObservacoes=3 }));
+DeveRenderizarTelaDeCadastroDeClientes(RenderizarCadastroClientePage());
+DeveExibirErroAoSubmeterFormularioSemNome(SimularSubmitCadastro({ nome="", telefone="11999999999" }));
+DeveExibirErroAoSubmeterFormularioSemTelefone(SimularSubmitCadastro({ nome="João", telefone="" }));

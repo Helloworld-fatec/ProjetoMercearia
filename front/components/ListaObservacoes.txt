@@ -1,0 +1,21 @@
+// front/componentes/ListaObservacoes
+
+ExibirListaObservacoes(observacoes, onExcluir){
+    se(observacoes.tamanho == 0)
+        ExibirMensagemSemObservacoes();
+        return;
+    para cada observacao em observacoes:
+        ExibirCardObservacao(observacao, onExcluir);
+}
+
+ExibirCardObservacao(observacao, onExcluir){
+    renderizar(textoObservacao(observacao.conteudo));
+    renderizar(dataObservacao(observacao.dataHora));
+    renderizar(autorObservacao(observacao.autor));
+    renderizar(botaoExcluir(onClick=onExcluir(observacao.id)));
+}
+
+ExibirMensagemSemObservacoes(){
+    renderizar("Nenhuma observação registrada para este cliente.");
+    renderizar(dica("Use as observações para registrar preferências, reclamações ou informações importantes sobre o cliente."));
+}

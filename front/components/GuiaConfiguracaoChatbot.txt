@@ -1,0 +1,10 @@
+// front/componentes/GuiaConfiguracaoChatbot
+
+ExibirGuiaChatbot(){
+    renderizar(secao("💡 Como funciona"));
+    renderizar(item("O bot responde automaticamente às mensagens dos clientes no WhatsApp."));
+    renderizar(item("Cada tipo de pergunta tem uma resposta configurável aqui."));
+    renderizar(item("Você pode ativar ou desativar cada resposta com o toggle."));
+    renderizar(item("Se uma resposta estiver desativada, o bot usará o texto padrão."));
+    renderizar(item("Clique em 'Restaurar padrão' para voltar ao texto original a qualquer momento."));
+}

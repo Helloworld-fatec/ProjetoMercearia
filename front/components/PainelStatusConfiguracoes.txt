@@ -1,0 +1,26 @@
+// front/componentes/PainelStatusConfiguracoes
+
+ExibirPainelStatusConfiguracoes(configuracoes){
+    var totalAtivas = ContarAtivas(configuracoes);
+    var totalInativas = configuracoes.tamanho - totalAtivas;
+    renderizar(resumo(
+        label="Respostas ativas",
+        valor=totalAtivas,
+        cor=verde
+    ));
+    renderizar(resumo(
+        label="Respostas inativas",
+        valor=totalInativas,
+        cor=cinza
+    ));
+    se(totalInativas > 0)
+        renderizar(aviso("⚠️ Você tem " + totalInativas + " resposta(s) desativada(s). O bot usará o texto padrão para essas situações."));
+}
+
+ContarAtivas(configuracoes){
+    var total = 0;
+    para cada configuracao em configuracoes:
+        se(configuracao.ativo)
+            total = total + 1;
+    return total;
+}

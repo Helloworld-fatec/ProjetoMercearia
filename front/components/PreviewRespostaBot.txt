@@ -1,0 +1,19 @@
+// front/componentes/PreviewRespostaBot
+
+ExibirPreviewRespostaBot(configuracao){
+    se(configuracao == null)
+        return;
+    renderizar(secao("Como o bot vai responder:"));
+    renderizar(balaoMensagem(
+        conteudo=configuracao.conteudo,
+        tipo="bot",
+        autor="Bot"
+    ));
+}
+
+ExibirPreviewComparativo(conteudoAntigo, conteudoNovo){
+    renderizar(secao("Antes:"));
+    renderizar(balaoMensagem(conteudo=conteudoAntigo, tipo="bot", estilo=riscado));
+    renderizar(secao("Depois:"));
+    renderizar(balaoMensagem(conteudo=conteudoNovo, tipo="bot", estilo=destaque));
+}
