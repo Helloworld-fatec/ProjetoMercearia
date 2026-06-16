@@ -1,0 +1,16 @@
+// front/componentes/ListaDespesas
+
+ExibirListaDespesas(despesas){
+    se(despesas.tamanho == 0)
+        renderizar("Nenhuma despesa registrada.");
+        return;
+    para cada despesa em despesas:
+        renderizar(despesa.data);
+        renderizar(despesa.descricao);
+        renderizar(despesa.categoria);
+        renderizar("R$ " + despesa.valor);
+}
+
+ExibirTotalDespesas(total){
+    renderizar("Total de despesas: R$ " + total);
+}

@@ -1,0 +1,22 @@
+// front/services/ExportacaoRelatorioService
+
+ExportarRelatorioVendas(dataInicio, dataFim, formato){
+    var resposta = ChamarAPI(RotaExportarRelatorioVendas(dataInicio, dataFim, formato));
+    if(resposta == erro)
+        return erro;
+    return resposta.arquivo;
+}
+
+ExportarRelatorioEstoque(formato){
+    var resposta = ChamarAPI(RotaExportarRelatorioEstoque(formato));
+    if(resposta == erro)
+        return erro;
+    return resposta.arquivo;
+}
+
+ExportarRelatorioDespesas(dataInicio, dataFim, formato){
+    var resposta = ChamarAPI(RotaExportarRelatorioDespesas(dataInicio, dataFim, formato));
+    if(resposta == erro)
+        return erro;
+    return resposta.arquivo;
+}

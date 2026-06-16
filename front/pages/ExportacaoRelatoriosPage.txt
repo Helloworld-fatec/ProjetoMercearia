@@ -1,0 +1,44 @@
+// front/pages/ExportacaoRelatoriosPage
+
+estado {
+    tipoRelatorio = "vendas";
+    dataInicio = null;
+    dataFim = null;
+    formato = "pdf";
+    exportando = false;
+}
+
+CarregarPagina(){
+    ExibirTitulo("Exportação de Relatórios");
+    ExibirSeletorTipoRelatorio(onSelecionar = DefinirTipoRelatorio);
+    ExibirSeletorPeriodo(onAlterarInicio = DefinirDataInicio, onAlterarFim = DefinirDataFim);
+    ExibirSeletorFormato(onSelecionar = DefinirFormato);
+    ExibirBotaoExportar(
+        desabilitado = PeriodoObrigatorioEVazio(),
+        onExportar = SolicitarExportacao
+    );
+}
+
+SolicitarExportacao(){
+    exportando = true;
+    ExibirCarregando("Gerando relatório...");
+    var arquivo = null;
+    if(tipoRelatorio == "vendas")
+        arquivo = ExportarRelatorioVendas(dataInicio, dataFim, formato);
+    if(tipoRelatorio == "estoque")
+        arquivo = ExportarRelatorioEstoque(formato);
+    if(tipoRelatorio == "despesas")
+        arquivo = ExportarRelatorioDespesas(dataInicio, dataFim, formato);
+    exportando = false;
+    se(arquivo == erro)
+        ExibirMensagemErro("Erro ao gerar relatório.");
+        return;
+    IniciarDownloadArquivo(arquivo);
+    ExibirMensagemSucesso("Relatório gerado com sucesso!");
+}
+
+PeriodoObrigatorioEVazio(){
+    if(tipoRelatorio == "estoque")
+        return false;
+    return dataInicio == null || dataFim == null;
+}

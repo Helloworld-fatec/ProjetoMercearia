@@ -1,0 +1,8 @@
+// front/componentes/SeletorTipoRelatorio
+
+ExibirSeletorTipoRelatorio(onSelecionar){
+    renderizar(opcao("Vendas", valor="vendas"));
+    renderizar(opcao("Estoque", valor="estoque"));
+    renderizar(opcao("Despesas", valor="despesas"));
+    onChange = onSelecionar;
+}

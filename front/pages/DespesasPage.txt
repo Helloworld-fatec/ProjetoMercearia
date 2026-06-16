@@ -1,0 +1,67 @@
+// front/pages/DespesasPage
+
+estado {
+    descricao = "";
+    valor = 0;
+    categoria = "";
+    data = hoje;
+    despesas = [];
+    totalDespesas = 0;
+}
+
+CarregarPagina(){
+    ExibirTitulo("Despesas e Saídas de Caixa");
+    ExibirFormularioDespesa(onSubmit = ConfirmarRegistroDespesa);
+    CarregarListaDespesas();
+}
+
+CarregarListaDespesas(){
+    var despesas = ListarDespesas(null, null);
+    if(despesas == erro)
+        ExibirMensagemErro("Erro ao carregar despesas.");
+        return;
+    despesas = despesas;
+    totalDespesas = SomarDespesas(despesas);
+    ExibirListaDespesas(despesas);
+    ExibirTotalDespesas(totalDespesas);
+}
+
+ConfirmarRegistroDespesa(){
+    if(descricao == null || descricao == "")
+        ExibirMensagemErro("Descrição é obrigatória.");
+        return;
+    if(valor <= 0)
+        ExibirMensagemErro("Valor deve ser maior que zero.");
+        return;
+    var despesa = MontarDespesa();
+    var resultado = RegistrarDespesa(despesa);
+    if(resultado == erro)
+        ExibirMensagemErro("Erro ao registrar despesa.");
+        return;
+    ExibirMensagemSucesso("Despesa registrada!");
+    LimparFormulario();
+    CarregarListaDespesas();
+}
+
+MontarDespesa(){
+    var despesa = Despesa {};
+    despesa.descricao = descricao;
+    despesa.valor = valor;
+    despesa.categoria = categoria;
+    despesa.data = data;
+    return despesa;
+}
+
+SomarDespesas(despesas){
+    var total = 0;
+    para cada despesa em despesas:
+        total = total + despesa.valor;
+    return total;
+}
+
+LimparFormulario(){
+    descricao = "";
+    valor = 0;
+    categoria = "";
+    data = hoje;
+}

@@ -1,0 +1,15 @@
+// front/services/DespesaService
+
+RegistrarDespesa(despesa){
+    var resposta = ChamarAPI(RotaRegistrarDespesa(despesa));
+    if(resposta == erro)
+        return erro;
+    return resposta.despesa;
+}
+
+ListarDespesas(dataInicio, dataFim){
+    var resposta = ChamarAPI(RotaListarDespesas(dataInicio, dataFim));
+    if(resposta == erro)
+        return erro;
+    return resposta.despesas;
+}
