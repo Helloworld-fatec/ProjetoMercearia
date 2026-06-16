@@ -1,0 +1,40 @@
+testes/testes-front/IntegracaoEndToEndChatbotTeste
+
+DeveExibirFluxoCompletoDeConsultaDeProduto(
+    SimularFluxoChatbot([
+        { mensagem="oi", intencaoEsperada="saudacao" },
+        { mensagem="tem cafe?", intencaoEsperada="consulta_produto" },
+        { mensagem="qual o preco do cafe?", intencaoEsperada="consulta_produto" }
+    ])
+);
+DeveRetornarProdutoUnicoComDetalhesCompletos(SimularConsultaProduto({ termo="Café", resultadosEsperados=1 }));
+DeveRetornarMultiplosProdutosEmLista(SimularConsultaProduto({ termo="ca", resultadosEsperados=3 }));
+DeveRetornarRespostaSemResultadosParaProdutoInexistente(SimularConsultaProduto({ termo="ProdutoXYZ", resultadosEsperados=0 }));
+DeveRetornarRespostaTermoVazioAoBuscarSemInformarNome(SimularConsultaProduto({ termo="" }));
+DeveRetornarErroAoConsultarSemTelefone(SimularConsultaProduto({ telefone=null, termo="Café" }));
+
+DeveAbrirHandoffComSucessoAoPedirVendedor(SimularHandoff({ mensagem="quero falar com um atendente", telefone="11999999999" }));
+DeveRetornarRespostaHandoffJaAbertoSeClienteJaPossuiAtendimento(SimularHandoff({ mensagem="quero falar com vendedor", telefone="11999999999", handoffJaAberto=true }));
+DeveAssumirHandoffComSucesso(AssumirHandoff({ handoffId=1, vendedor="Maria" }));
+DeveRetornarErroAoAssumirHandoffJaAssumido(AssumirHandoff({ handoffId=1, vendedor="Maria", status="em_atendimento" }));
+DeveEncerrarHandoffComSucesso(EncerrarHandoff({ handoffId=1, status="em_atendimento" }));
+DeveRetornarErroAoEncerrarHandoffJaEncerrado(EncerrarHandoff({ handoffId=1, status="encerrado" }));
+DeveExibirListaDeHandoffsAbertos(CarregarHandoffsAbertos());
+DeveExibirListaDeHandoffsEmAtendimento(CarregarHandoffsEmAtendimento());
+DeveExibirListaVaziaQuandoNaoHouverHandoffsAbertos(CarregarHandoffsAbertos(semHandoffs=true));
+
+DeveCarregarConfiguracoesAoAbrirTela(CarregarTelaConfiguracoes());
+DeveExibirTodasAsSeisConfiguracoespadrao(VerificarQuantidadeConfiguracoes(quantidadeEsperada=6));
+DeveAtualizarConteudoDeConfiguracao(AtualizarConfiguracao({ id=1, conteudo="Olá! Seja bem-vindo!", ativo=true }));
+DeveRetornarErroAoAtualizarConfiguracaoComConteudoVazio(AtualizarConfiguracao({ id=1, conteudo="", ativo=true }));
+DeveAtivarConfiguracaoComSucesso(AtivarDesativarConfiguracao({ id=1, ativo=true }));
+DeveDesativarConfiguracaoComSucesso(AtivarDesativarConfiguracao({ id=1, ativo=false }));
+DeveRestaurarConfiguracaoParaTextoPadrao(RestaurarConfiguracaoPadrao({ id=1 }));
+DeveRefletirNovatextoNaRespostaDoBot(VerificarRespostaBotAposAtualizacao({ chave="saudacao", novoTexto="Olá! Seja bem-vindo!", mensagemCliente="oi" }));
+
+DeveExibirFluxoCompletoConsultaSeguidaDeHandoff(
+    SimularFluxoChatbot([
+        { mensagem="tem arroz?", intencaoEsperada="consulta_produto" },
+        { mensagem="nao achei o que queria, quero falar com atendente", intencaoEsperada="falar_vendedor" }
+    ])
+);
