@@ -1,0 +1,11 @@
+testes/testes-front/IntegracaoProdutoTeste
+
+DeveExibirListaDeProdutosAoCarregarAPagina(RenderizarTelaProdutos());
+DeveExibirMensagemDeErroQuandoAPIFalha(RenderizarTelaProdutos(APIIndisponivel));
+DeveExibirProdutosFiltradosAoDigitarNome(AplicarFiltro("Café"));
+DeveExibirProdutosFiltradosAoSelecionarCategoria(AplicarFiltro(categoria="Bebidas"));
+DeveExibirListaVaziaQuandoFiltroNaoEncontraNada(AplicarFiltro("ProdutoQueNaoExiste"));
+DeveExibirSegundaPaginaAoClicarProximo(AvancarPagina(paginaAtual=1));
+DeveVoltarParaPrimeiraPaginaAoClicarAnterior(VoltarPagina(paginaAtual=2));
+DeveAtualizarListaAoRecarregarDados(AtualizarDados());
+DeveExibirQuantidadeCorretaDeProdutosPorPagina(VerificarItensPorPagina(limite=10));
