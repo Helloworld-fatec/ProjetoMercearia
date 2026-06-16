@@ -1,0 +1,4 @@
+// back/routes/HandoffServicoRoute
+
+RotaProcessarSolicitacaoHandoff(mensagem);
+RotaObterMetricasHandoff(dataInicio, dataFim);

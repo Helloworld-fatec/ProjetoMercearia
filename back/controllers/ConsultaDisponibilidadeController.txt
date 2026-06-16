@@ -1,0 +1,84 @@
+// back/controllers/ConsultaDisponibilidadeController
+
+ConsultarDisponibilidade(produtoId, quantidadeDesejada, telefone){
+    se(produtoId == null)
+        return erro;
+    se(!ValidarQuantidadeConsulta(quantidadeDesejada))
+        return erro;
+    var produto = BuscarProdutoPorIdRepositorio(produtoId);
+    se(produto == null)
+        return erro;
+    var consulta = ConsultaDisponibilidade {};
+    consulta.produtoId = produtoId;
+    consulta.nomeProduto = produto.nome;
+    consulta.quantidadeDesejada = quantidadeDesejada;
+    consulta.quantidadeDisponivel = produto.quantidade;
+    consulta.telefoneCliente = telefone;
+    consulta.dataHora = ObterDataHoraAtual();
+    consulta.disponivel = produto.quantidade >= quantidadeDesejada;
+    consulta.disponibilidadeParcial = produto.quantidade > 0 && produto.quantidade < quantidadeDesejada;
+    SalvarConsultaDisponibilidadeRepositorio(consulta);
+    return consulta;
+}
+
+ConsultarDisponibilidadeMultiplos(itens, telefone){
+    se(itens == null || itens.tamanho == 0)
+        return erro;
+    var resultado = ResultadoDisponibilidadeMultiplos {};
+    resultado.itens = [];
+    resultado.todosDisponiveis = true;
+    resultado.algumIndisponivel = false;
+    para cada item em itens:
+        var consulta = ConsultarDisponibilidade(item.produtoId, item.quantidadeDesejada, telefone);
+        se(consulta == erro)
+            resultado.todosDisponiveis = false;
+            resultado.algumIndisponivel = true;
+            continue;
+        resultado.itens.adicionar(consulta);
+        se(!consulta.disponivel)
+            resultado.todosDisponiveis = false;
+            resultado.algumIndisponivel = true;
+    return resultado;
+}
+
+MontarRespostaDisponibilidadeWhatsApp(consulta, telefone){
+    var resposta = RespostaChatbot {};
+    resposta.telefoneDestino = telefone;
+    resposta.tipo = "consulta_disponibilidade";
+    se(consulta.disponivel)
+        resposta.conteudo = "✅ *" + consulta.nomeProduto + "* está disponível!\n";
+        resposta.conteudo = resposta.conteudo + "Quantidade em estoque: " + consulta.quantidadeDisponivel;
+        return resposta;
+    se(consulta.disponibilidadeParcial)
+        resposta.conteudo = "⚠️ Temos *" + consulta.nomeProduto + "*, mas em quantidade menor do que você pediu.\n";
+        resposta.conteudo = resposta.conteudo + "Disponível: " + consulta.quantidadeDisponivel + " unidade(s).";
+        return resposta;
+    resposta.conteudo = "❌ *" + consulta.nomeProduto + "* está indisponível no momento.";
+    return resposta;
+}
+
+MontarRespostaDisponibilidadeMultiplosWhatsApp(resultado, telefone){
+    var resposta = RespostaChatbot {};
+    resposta.telefoneDestino = telefone;
+    resposta.tipo = "consulta_disponibilidade";
+    se(resultado.todosDisponiveis)
+        resposta.conteudo = "✅ Todos os produtos estão disponíveis!\n";
+    se(resultado.algumIndisponivel)
+        resposta.conteudo = "⚠️ Confira a disponibilidade:\n";
+    para cada item em resultado.itens:
+        se(item.disponivel)
+            resposta.conteudo = resposta.conteudo + "✅ " + item.nomeProduto + " (Qtd: " + item.quantidadeDisponivel + ")\n";
+        se(!item.disponivel && item.disponibilidadeParcial)
+            resposta.conteudo = resposta.conteudo + "⚠️ " + item.nomeProduto + " (Apenas " + item.quantidadeDisponivel + " disponível)\n";
+        se(!item.disponivel && !item.disponibilidadeParcial)
+            resposta.conteudo = resposta.conteudo + "❌ " + item.nomeProduto + " (Indisponível)\n";
+    return resposta;
+}
+
+ValidarQuantidadeConsulta(quantidade){
+    se(quantidade == null)
+        return false;
+    se(quantidade <= 0)
+        return false;
+    return true;
+}

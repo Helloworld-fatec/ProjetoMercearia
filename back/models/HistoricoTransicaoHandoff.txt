@@ -1,0 +1,10 @@
+// back/models/HistoricoTransicaoHandoff
+
+HistoricoTransicaoHandoff {
+    id;
+    handoffId;
+    statusAnterior;
+    statusNovo;
+    responsavel;
+    dataHora;
+}

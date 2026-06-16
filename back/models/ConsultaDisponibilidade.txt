@@ -1,0 +1,20 @@
+// back/models/ConsultaDisponibilidade
+
+ConsultaDisponibilidade {
+    produtoId;
+    nomeProduto;
+    quantidadeDesejada;
+    quantidadeDisponivel;
+    disponivel;
+    disponibilidadeParcial;
+    telefoneCliente;
+    dataHora;
+}
+
+ResultadoDisponibilidadeMultiplos {
+    itens[];
+    todosDisponiveis;
+    algumIndisponivel;
+}
+
+

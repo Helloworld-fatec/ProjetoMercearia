@@ -1,0 +1,99 @@
+// back/controllers/HandoffServicoController
+
+ProcessarSolicitacaoHandoff(mensagem){
+    se(mensagem == null || mensagem.telefoneRemetente == null)
+        return erro;
+    var podeContinuarNoBot = VerificarSePodeContinuarNoBot(mensagem);
+    se(!podeContinuarNoBot)
+        return AcionarVendedor(mensagem);
+    return null;
+}
+
+VerificarSePodeContinuarNoBot(mensagem){
+    var intencao = IdentificarIntencao(mensagem.conteudo);
+    se(intencao == "falar_vendedor")
+        return false;
+    var tentativasConsulta = ContarTentativasConsultaSemResultado(mensagem.telefoneRemetente);
+    se(tentativasConsulta >= 3)
+        return false;
+    var tempoSemResposta = CalcularTempoSemInteracao(mensagem.telefoneRemetente);
+    se(tempoSemResposta > 300)
+        return false;
+    return true;
+}
+
+ContarTentativasConsultaSemResultado(telefone){
+    var consultas = BuscarConsultasSemResultadoRepositorio(telefone);
+    se(consultas == null)
+        return 0;
+    return consultas.tamanho;
+}
+
+CalcularTempoSemInteracao(telefone){
+    var ultimaMensagem = BuscarUltimaMensagemRepositorio(telefone);
+    se(ultimaMensagem == null)
+        return 0;
+    return DiferencaEmSegundos(ultimaMensagem.dataHora, ObterDataHoraAtual());
+}
+
+ValidarTransicaoStatus(statusAtual, statusNovo){
+    se(statusAtual == "aberto" && statusNovo == "em_atendimento")
+        return true;
+    se(statusAtual == "aberto" && statusNovo == "encerrado")
+        return true;
+    se(statusAtual == "em_atendimento" && statusNovo == "encerrado")
+        return true;
+    return false;
+}
+
+RegistrarHistoricoTransicao(handoff, statusAnterior, statusNovo, responsavel){
+    var historico = HistoricoTransicaoHandoff {};
+    historico.handoffId = handoff.id;
+    historico.statusAnterior = statusAnterior;
+    historico.statusNovo = statusNovo;
+    historico.responsavel = responsavel;
+    historico.dataHora = ObterDataHoraAtual();
+    SalvarHistoricoTransicaoRepositorio(historico);
+}
+
+ObterMetricasHandoff(dataInicio, dataFim){
+    se(dataInicio == null || dataFim == null)
+        return erro;
+    var handoffs = BuscarHandoffsPorPeriodoRepositorio(dataInicio, dataFim);
+    se(handoffs == null || handoffs.tamanho == 0)
+        return MetricasHandoffVazio(dataInicio, dataFim);
+    var metricas = MetricasHandoff {};
+    metricas.dataInicio = dataInicio;
+    metricas.dataFim = dataFim;
+    metricas.totalHandoffs = handoffs.tamanho;
+    metricas.totalEncerrados = 0;
+    metricas.totalAbertos = 0;
+    metricas.totalEmAtendimento = 0;
+    metricas.tempoMedioAtendimento = 0;
+    var somaTempos = 0;
+    var handoffsEncerrados = 0;
+    para cada handoff em handoffs:
+        se(handoff.status == "encerrado")
+            metricas.totalEncerrados = metricas.totalEncerrados + 1;
+            somaTempos = somaTempos + DiferencaEmMinutos(handoff.dataAbertura, handoff.dataEncerramento);
+            handoffsEncerrados = handoffsEncerrados + 1;
+        se(handoff.status == "aberto")
+            metricas.totalAbertos = metricas.totalAbertos + 1;
+        se(handoff.status == "em_atendimento")
+            metricas.totalEmAtendimento = metricas.totalEmAtendimento + 1;
+    se(handoffsEncerrados > 0)
+        metricas.tempoMedioAtendimento = somaTempos / handoffsEncerrados;
+    return metricas;
+}
+
+MetricasHandoffVazio(dataInicio, dataFim){
+    var metricas = MetricasHandoff {};
+    metricas.dataInicio = dataInicio;
+    metricas.dataFim = dataFim;
+    metricas.totalHandoffs = 0;
+    metricas.totalEncerrados = 0;
+    metricas.totalAbertos = 0;
+    metricas.totalEmAtendimento = 0;
+    metricas.tempoMedioAtendimento = 0;
+    return metricas;
+}

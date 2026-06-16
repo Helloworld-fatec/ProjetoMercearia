@@ -1,0 +1,4 @@
+// back/routes/ConsultaDisponibilidadeRoute
+
+RotaConsultarDisponibilidade(produtoId, quantidadeDesejada, telefone);
+RotaConsultarDisponibilidadeMultiplos(itens, telefone);

@@ -1,0 +1,27 @@
+testes/testes-back/HandoffConsultaDisponibilidadeTeste
+
+DeveRetornarDisponibilidadeQuandoProdutoExisteEmEstoque(ConsultarDisponibilidade({ produtoId=1, quantidadeDesejada=2, estoqueAtual=10 }));
+DeveRetornarIndisponivelQuandoEstoqueZerado(ConsultarDisponibilidade({ produtoId=1, quantidadeDesejada=1, estoqueAtual=0 }));
+DeveRetornarIndisponivelQuandoQuantidadeDesejadaMaiorQueEstoque(ConsultarDisponibilidade({ produtoId=1, quantidadeDesejada=10, estoqueAtual=5 }));
+DeveRetornarDisponibilidadeParcialQuandoEstoqueMenorQueDesejado(ConsultarDisponibilidadeParcial({ produtoId=1, quantidadeDesejada=10, estoqueAtual=5 }));
+DeveRetornarErroAoConsultarProdutoInexistente(ConsultarDisponibilidade({ produtoId=999, quantidadeDesejada=1 }));
+DeveRetornarErroAoConsultarComQuantidadeZero(ConsultarDisponibilidade({ produtoId=1, quantidadeDesejada=0 }));
+DeveRetornarErroAoConsultarComQuantidadeNegativa(ConsultarDisponibilidade({ produtoId=1, quantidadeDesejada=-1 }));
+DeveRetornarListaDeDisponibilidadesParaMultiplosProdutos(ConsultarDisponibilidadeMultiplos([{ produtoId=1, quantidadeDesejada=2 }, { produtoId=2, quantidadeDesejada=5 }]));
+
+DeveAbrirHandoffComSucessoParaClienteSemAtendimentoAtivo(AcionarVendedor({ telefoneRemetente="11999999999", conteudo="quero falar com vendedor" }));
+DeveRetornarHandoffJaAbertoParaClienteComAtendimentoAtivo(AcionarVendedor({ telefoneRemetente="11999999999", handoffJaAberto=true }));
+DeveRetornarErroAoAbrirHandoffSemTelefone(AcionarVendedor({ telefoneRemetente=null, conteudo="quero falar com vendedor" }));
+DeveAssociarHistoricoAoAbrirHandoff(VerificarHistoricoNoHandoff({ telefone="11999999999", mensagensAnteriores=3 }));
+DeveAssumirHandoffComSucesso(AssumirHandoff({ handoffId=1, vendedor="Maria", statusAtual="aberto" }));
+DeveRetornarErroAoAssumirHandoffInexistente(AssumirHandoff({ handoffId=999, vendedor="Maria" }));
+DeveRetornarErroAoAssumirHandoffJaEmAtendimento(AssumirHandoff({ handoffId=1, vendedor="Maria", statusAtual="em_atendimento" }));
+DeveRetornarErroAoAssumirHandoffEncerrado(AssumirHandoff({ handoffId=1, vendedor="Maria", statusAtual="encerrado" }));
+DeveEncerrarHandoffComSucesso(EncerrarHandoff({ handoffId=1, statusAtual="em_atendimento" }));
+DeveEncerrarHandoffAbertoComSucesso(EncerrarHandoff({ handoffId=1, statusAtual="aberto" }));
+DeveRetornarErroAoEncerrarHandoffJaEncerrado(EncerrarHandoff({ handoffId=1, statusAtual="encerrado" }));
+DeveRetornarErroAoEncerrarHandoffInexistente(EncerrarHandoff({ handoffId=999 }));
+DeveListarHandoffsAbertosCorretamente(ListarHandoffsPorStatus("aberto", quantidadeEsperada=2));
+DeveListarHandoffsEmAtendimentoCorretamente(ListarHandoffsPorStatus("em_atendimento", quantidadeEsperada=1));
+DeveRetornarListaVaziaQuandoNaoHouverHandoffsAbertos(ListarHandoffsPorStatus("aberto", quantidadeEsperada=0));
+DeveAtualizarStatusDaNotificacaoAoAssumirHandoff(VerificarStatusNotificacao({ handoffId=1, statusEsperado="assumida" }));
