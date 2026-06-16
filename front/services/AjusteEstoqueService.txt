@@ -1,0 +1,22 @@
+// front/services/AjusteEstoqueService
+
+BuscarProdutos(){
+    var resposta = ChamarAPI(RotaListarProdutos());
+    if(resposta == erro)
+        return erro;
+    return resposta.produtos;
+}
+
+RegistrarAjusteEstoque(ajuste){
+    var resposta = ChamarAPI(RotaRegistrarAjusteEstoque(ajuste));
+    if(resposta == erro)
+        return erro;
+    return resposta.ajuste;
+}
+
+ListarHistoricoAjustes(produtoId){
+    var resposta = ChamarAPI(RotaListarAjustesEstoque(produtoId));
+    if(resposta == erro)
+        return erro;
+    return resposta.ajustes;
+}

@@ -1,0 +1,14 @@
+// front/componentes/HistoricoAjustes
+
+ExibirHistoricoAjustes(ajustes){
+    se(ajustes.tamanho == 0)
+        renderizar("Nenhum ajuste registrado.");
+        return;
+    para cada ajuste em ajustes:
+        renderizar(ajuste.dataHora);
+        renderizar(ajuste.tipo);
+        renderizar(ajuste.quantidadeAntes);
+        renderizar(ajuste.quantidadeAjustada);
+        renderizar(ajuste.quantidadeDepois);
+        renderizar(ajuste.motivo);
+}

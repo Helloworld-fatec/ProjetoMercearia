@@ -1,0 +1,29 @@
+// front/services/ConfiguracaoEstoqueService
+
+BuscarProdutosComEstoqueMinimo(){
+    var resposta = ChamarAPI(RotaListarProdutos());
+    if(resposta == erro)
+        return erro;
+    return resposta.produtos;
+}
+
+AtualizarEstoqueMinimo(produtoId, estoqueMinimo){
+    var resposta = ChamarAPI(RotaAtualizarEstoqueMinimo(produtoId, estoqueMinimo));
+    if(resposta == erro)
+        return erro;
+    return resposta.produto;
+}
+
+BuscarAlertasAtivos(){
+    var resposta = ChamarAPI(RotaListarAlertasAtivos());
+    if(resposta == erro)
+        return erro;
+    return resposta.alertas;
+}
+
+ResolverAlerta(alertaId){
+    var resposta = ChamarAPI(RotaResolverAlerta(alertaId));
+    if(resposta == erro)
+        return erro;
+    return resposta.alerta;
+}
