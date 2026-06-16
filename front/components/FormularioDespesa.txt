@@ -1,0 +1,9 @@
+// front/componentes/FormularioDespesa
+
+ExibirFormularioDespesa(onSubmit){
+    input(label="Descrição", tipo=texto, obrigatorio=true, onChange=DefinirDescricao);
+    input(label="Valor (R$)", tipo=numero, obrigatorio=true, onChange=DefinirValor);
+    select(label="Categoria", opcoes=["fixo", "variavel", "imposto", "outros"], onChange=DefinirCategoria);
+    input(label="Data", tipo=data, onChange=DefinirData);
+    renderizar(botao("Registrar Despesa", onClick=onSubmit));
+}

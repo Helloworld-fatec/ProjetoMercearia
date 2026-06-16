@@ -1,0 +1,30 @@
+// front/pages/RankingClientesPage
+
+estado {
+    clientes = [];
+    criterio = "quantidade_compras";
+    limite = 10;
+}
+
+CarregarPagina(){
+    ExibirTitulo("Ranking de Clientes");
+    ExibirSeletorCriterio(onSelecionar = AlterarCriterio);
+    CarregarRanking();
+}
+
+CarregarRanking(){
+    var clientes = BuscarRankingClientes(criterio, limite);
+    if(clientes == erro)
+        ExibirMensagemErro("Erro ao carregar ranking.");
+        return;
+    se(clientes.tamanho == 0)
+        ExibirMensagemSemClientes();
+        return;
+    clientes = clientes;
+    ExibirRankingClientes(clientes, criterio);
+}
+
+AlterarCriterio(novoCriterio){
+    criterio = novoCriterio;
+    CarregarRanking();
+}

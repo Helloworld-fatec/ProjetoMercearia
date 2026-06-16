@@ -1,0 +1,7 @@
+// front/componentes/SeletorFormatoRelatorio
+
+ExibirSeletorFormato(onSelecionar){
+    renderizar(opcao("PDF", valor="pdf"));
+    renderizar(opcao("Excel", valor="excel"));
+    onChange = onSelecionar;
+}

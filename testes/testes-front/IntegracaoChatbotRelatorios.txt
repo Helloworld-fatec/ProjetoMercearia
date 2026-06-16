@@ -1,0 +1,32 @@
+testes/testes-front/IntegracaoChatbotRelatoriosTeste
+
+DeveExibirTelaDeExportacaoAoCarregar(RenderizarTelaExportacaoRelatorios());
+DeveGerarRelatorioDeVendasEmPDFComSucesso(SolicitarExportacao({ tipo="vendas", dataInicio="2024-01-01", dataFim="2024-01-31", formato="pdf" }));
+DeveGerarRelatorioDeVendasEmExcelComSucesso(SolicitarExportacao({ tipo="vendas", dataInicio="2024-01-01", dataFim="2024-01-31", formato="excel" }));
+DeveGerarRelatorioDeEstoqueEmPDFComSucesso(SolicitarExportacao({ tipo="estoque", formato="pdf" }));
+DeveGerarRelatorioDeEstoqueEmExcelComSucesso(SolicitarExportacao({ tipo="estoque", formato="excel" }));
+DeveGerarRelatorioDeDespesasComSucesso(SolicitarExportacao({ tipo="despesas", dataInicio="2024-01-01", dataFim="2024-01-31", formato="pdf" }));
+DeveExibirErroQuandoDataInicioForMaiorQueDataFim(SolicitarExportacao({ tipo="vendas", dataInicio="2024-02-01", dataFim="2024-01-01", formato="pdf" }));
+DeveExibirErroQuandoFormatoForInvalido(SolicitarExportacao({ tipo="vendas", dataInicio="2024-01-01", dataFim="2024-01-31", formato="csv" }));
+DeveDesabilitarBotaoExportarQuandoPeriodoNaoEstiverPreenchido(VerificarEstadoBotaoExportar(dataInicio=null, dataFim=null));
+
+DeveExibirTelaDeDespesasAoCarregar(RenderizarTelaDespesas());
+DeveRegistrarDespesaComSucesso(RegistrarDespesa({ descricao="Aluguel", valor=1500.00, categoria="fixo", data="2024-01-05" }));
+DeveExibirErroAoRegistrarDespesaSemDescricao(RegistrarDespesa({ descricao="", valor=1500.00, categoria="fixo" }));
+DeveExibirErroAoRegistrarDespesaComValorZero(RegistrarDespesa({ descricao="Aluguel", valor=0, categoria="fixo" }));
+DeveExibirListaDeDespesasRegistradas(CarregarListaDespesas());
+DeveTotalDeDespesasAtualizar(VerificarTotalDespesasAposRegistro(valorNovaDespesa=500.00));
+
+DeveExibirTelaDeRankingAoCarregar(RenderizarTelaRankingClientes());
+DeveExibirClientesOrdenadosPorQuantidadeDeCompras(VerificarOrdemRanking(criterio="quantidade_compras"));
+DeveExibirClientesOrdenadosPorValorTotal(VerificarOrdemRanking(criterio="valor_total"));
+DeveExibirMensagemQuandoNaoHouverClientesNoRanking(RenderizarTelaRankingClientes(semClientes=true));
+
+DeveReceberMensagemDoWhatsAppEResponderSaudacao(SimularMensagemWhatsApp({ conteudo="oi", telefone="11999999999" }));
+DeveResponderConsultaDeProdutoExistente(SimularMensagemWhatsApp({ conteudo="tem cafe?", telefone="11999999999" }));
+DeveResponderConsultaDeProdutoInexistente(SimularMensagemWhatsApp({ conteudo="tem produto xyz?", telefone="11999999999" }));
+DeveResponderPerguntaSobreHorario(SimularMensagemWhatsApp({ conteudo="qual o horario de funcionamento?", telefone="11999999999" }));
+DeveResponderPerguntaSobreLocalizacao(SimularMensagemWhatsApp({ conteudo="onde fica a loja?", telefone="11999999999" }));
+DeveDispararHandoffAoPedirVendedor(SimularMensagemWhatsApp({ conteudo="quero falar com um atendente", telefone="11999999999" }));
+DeveRetornarRespostaPadraoParaMensagemNaoIdentificada(SimularMensagemWhatsApp({ conteudo="blablabla", telefone="11999999999" }));
+DeveRetornarErroAoReceberMensagemSemTelefone(SimularMensagemWhatsApp({ conteudo="oi", telefone=null }));
