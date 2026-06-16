@@ -1,0 +1,6 @@
+// front/componentes/IndicadorQuantidade
+
+ExibirIndicadorQuantidade(quantidade, estoqueMinimo){
+    renderizar(textoQuantidade("Qtd: " + quantidade));
+    ExibirBadgeEstoque(quantidade, estoqueMinimo);
+}

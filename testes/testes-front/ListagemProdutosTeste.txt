@@ -1,0 +1,24 @@
+// testes/testes-front/ListagemProdutosTeste
+
+DeveRenderizarListaComProdutos(RenderizarListaProdutos([{ nome="Café", categoria="Bebidas", quantidade=50, preco=12.90 }]));
+DeveRenderizarMensagemQuandoListaEstiverVazia(RenderizarListaProdutos([]));
+DeveRenderizarCardComTodasAsInformacoesDoProduto(RenderizarCardProduto({ nome="Café", categoria="Bebidas", quantidade=50, preco=12.90 }));
+DeveExibirNomeNoProdutoCard(VerificarCampoNoCard("nome", "Café"));
+DeveExibirCategoriaNoProdutoCard(VerificarCampoNoCard("categoria", "Bebidas"));
+DeveExibirQuantidadeNoProdutoCard(VerificarCampoNoCard("quantidade", 50));
+DeveExibirPrecoNoProdutoCard(VerificarCampoNoCard("preco", 12.90));
+
+DeveExibirBadgeVerdeQuandoEstoqueNormal(RenderizarBadgeEstoque(quantidade=50, estoqueMinimo=10));
+DeveExibirBadgeAmareloQuandoEstoqueEmAlerta(RenderizarBadgeEstoque(quantidade=8, estoqueMinimo=10));
+DeveExibirBadgeVermelhoQuandoEstoqueZerado(RenderizarBadgeEstoque(quantidade=0, estoqueMinimo=10));
+DeveExibirLabelCorretaParaEstoqueNormal(VerificarLabelEstoque(quantidade=50, estoqueMinimo=10, labelEsperada="Em estoque"));
+DeveExibirLabelCorretaParaEstoqueEmAlerta(VerificarLabelEstoque(quantidade=8, estoqueMinimo=10, labelEsperada="Estoque baixo"));
+DeveExibirLabelCorretaParaEstoqueZerado(VerificarLabelEstoque(quantidade=0, estoqueMinimo=10, labelEsperada="Sem estoque"));
+
+DeveRenderizarFiltroPorNome(RenderizarFiltroProdutos());
+DeveRenderizarFiltroPorCategoria(RenderizarFiltroProdutos());
+DeveDisparararOnDigitarAoAlterarCampoNome(SimularDigitacao(campo="nome", valor="Café"));
+DeveDispararOnSelecionarAoAlterarCategoria(SimularSelecao(campo="categoria", valor="Bebidas"));
+
+DeveRenderizarTelaDeProdutosCompleta(RenderizarProdutosPage());
+DeveExibirTituloNaTelaDeProdutos(VerificarTitulo("Estoque de Produtos"));

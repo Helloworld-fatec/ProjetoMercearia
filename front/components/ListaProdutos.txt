@@ -1,21 +1,20 @@
 // front/componentes/ListaProdutos
 
 ExibirListaDeProdutos(produtos){
+    if(produtos.tamanho == 0)
+        ExibirMensagemListaVazia();
+        return;
     para cada produto em produtos:
-        ExibirCardProduto(produto.nome, produto.categoria, produto.quantidade, produto.preço);
+        ExibirCardProduto(produto);
 }
 
-ExibirCardProduto(nome, categoria, quantidade, preço){
-    renderizar(nome);
-    renderizar(categoria);
-    renderizar(quantidade);
-    renderizar(preço);
+ExibirCardProduto(produto){
+    renderizar(produto.nome);
+    renderizar(produto.categoria);
+    renderizar(produto.preco);
+    ExibirBadgeEstoque(produto.quantidade, produto.estoqueMinimo);
 }
 
-ExibirMensagemSemResultados(){
+ExibirMensagemListaVazia(){
     renderizar("Nenhum produto encontrado.");
-}
-
-ExibirMensagemDeErro(mensagem){
-    renderizar(mensagem);
 }

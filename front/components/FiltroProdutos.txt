@@ -1,9 +1,18 @@
 // front/componentes/FiltroProdutos
 
+ExibirFiltroProdutos(onDigitar, onSelecionar){
+    ExibirFiltroPorNome(onDigitar);
+    ExibirFiltroPorCategoria(categorias, onSelecionar);
+}
+
 ExibirFiltroPorNome(onDigitar){
-    input(tipo=texto, onChange=onDigitar);
+    input(tipo=texto, placeholder="Buscar por nome...", onChange=onDigitar);
 }
 
 ExibirFiltroPorCategoria(categorias, onSelecionar){
-    select(opcoes=categorias, onChange=onSelecionar);
+    select(
+        placeholder="Filtrar por categoria",
+        opcoes=categorias,
+        onChange=onSelecionar
+    );
 }

@@ -1,0 +1,22 @@
+// front/componentes/BadgeEstoque
+
+ExibirBadgeEstoque(quantidade, estoqueMinimo){
+    var status = DefinirStatusEstoque(quantidade, estoqueMinimo);
+    if(status == "normal")
+        renderizar(badge(cor=verde, label="Em estoque"));
+        return;
+    if(status == "alerta")
+        renderizar(badge(cor=amarelo, label="Estoque baixo"));
+        return;
+    if(status == "zerado")
+        renderizar(badge(cor=vermelho, label="Sem estoque"));
+        return;
+}
+
+DefinirStatusEstoque(quantidade, estoqueMinimo){
+    if(quantidade == 0)
+        return "zerado";
+    if(quantidade <= estoqueMinimo)
+        return "alerta";
+    return "normal";
+}
