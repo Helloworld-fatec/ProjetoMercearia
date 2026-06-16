@@ -1,0 +1,14 @@
+// front/componentes/FormularioEdicaoConfiguracao
+
+ExibirFormularioEdicao(configuracao, onSalvar, onCancelar){
+    renderizar(titulo("Editando: " + configuracao.descricao));
+    textarea(
+        label="Texto da resposta",
+        valor=configuracao.conteudo,
+        linhas=4,
+        onChange=DefinirConteudo
+    );
+    renderizar(toggle(label="Ativa", valor=configuracao.ativo, onChange=DefinirAtivo));
+    renderizar(botao("Salvar", onClick=onSalvar(configuracao.id, conteudo, ativo)));
+    renderizar(botao("Cancelar", onClick=onCancelar));
+}

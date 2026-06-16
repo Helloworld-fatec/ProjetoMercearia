@@ -1,0 +1,26 @@
+// front/componentes/ListaConfiguracoesChatbot
+
+ExibirListaConfiguracoes(configuracoes){
+    se(configuracoes.tamanho == 0)
+        renderizar("Nenhuma configuração encontrada.");
+        return;
+    para cada configuracao em configuracoes:
+        ExibirCardConfiguracao(configuracao);
+}
+
+ExibirCardConfiguracao(configuracao){
+    renderizar(configuracao.descricao);
+    renderizar(BadgeStatusConfiguracao(configuracao.ativo));
+    renderizar(textoPreview(configuracao.conteudo));
+    renderizar("Atualizado em: " + configuracao.ultimaAtualizacao);
+    se(configuracao.editavel)
+        renderizar(botao("Editar", onClick=IniciarEdicao(configuracao)));
+        renderizar(botao("Restaurar padrão", onClick=ConfirmarRestaurarPadrao(configuracao.id)));
+    renderizar(toggle(ativo=configuracao.ativo, onChange=ToggleAtivo(configuracao.id, !configuracao.ativo)));
+}
+
+BadgeStatusConfiguracao(ativo){
+    se(ativo)
+        return badge(cor=verde, label="Ativa");
+    return badge(cor=cinza, label="Inativa");
+}

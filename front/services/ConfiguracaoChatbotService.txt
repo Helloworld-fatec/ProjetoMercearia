@@ -1,0 +1,29 @@
+// front/services/ConfiguracaoChatbotService
+
+ListarConfiguracoes(){
+    var resposta = ChamarAPI(RotaListarConfiguracoes());
+    se(resposta == erro)
+        return erro;
+    return resposta.configuracoes;
+}
+
+AtualizarConfiguracao(id, conteudo, ativo){
+    var resposta = ChamarAPI(RotaAtualizarConfiguracao(id, conteudo, ativo));
+    se(resposta == erro)
+        return erro;
+    return resposta.configuracao;
+}
+
+AtivarDesativarConfiguracao(id, ativo){
+    var resposta = ChamarAPI(RotaAtivarDesativarConfiguracao(id, ativo));
+    se(resposta == erro)
+        return erro;
+    return resposta.configuracao;
+}
+
+RestaurarConfiguracaoPadrao(id){
+    var resposta = ChamarAPI(RotaRestaurarConfiguracaoPadrao(id));
+    se(resposta == erro)
+        return erro;
+    return resposta.configuracao;
+}
