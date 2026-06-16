@@ -1,0 +1,70 @@
+// back/controllers/AjusteEstoqueController
+
+RegistrarAjusteEstoque(ajuste){
+    if(ajuste == null)
+        return erro;
+    if(!ValidarTipoAjuste(ajuste.tipo))
+        return erro;
+    if(!ValidarQuantidadeAjuste(ajuste.quantidade))
+        return erro;
+    var produto = BuscarProdutoPorIdRepositorio(ajuste.produtoId);
+    if(produto == null)
+        return erro;
+    if(ajuste.tipo == "perda")
+        return ProcessarPerda(produto, ajuste);
+    if(ajuste.tipo == "devolucao")
+        return ProcessarDevolucao(produto, ajuste);
+}
+
+ProcessarPerda(produto, ajuste){
+    if(ajuste.quantidade > produto.quantidade)
+        return erro;
+    var quantidadeAntes = produto.quantidade;
+    produto.quantidade = produto.quantidade - ajuste.quantidade;
+    AtualizarProdutoRepositorio(produto);
+    VerificarAlertaEstoqueMinimo(produto);
+    return SalvarRegistroAjuste(produto, ajuste, quantidadeAntes);
+}
+
+ProcessarDevolucao(produto, ajuste){
+    var quantidadeAntes = produto.quantidade;
+    produto.quantidade = produto.quantidade + ajuste.quantidade;
+    AtualizarProdutoRepositorio(produto);
+    return SalvarRegistroAjuste(produto, ajuste, quantidadeAntes);
+}
+
+SalvarRegistroAjuste(produto, ajuste, quantidadeAntes){
+    var registro = AjusteEstoque {};
+    registro.produtoId = produto.id;
+    registro.nomeProduto = produto.nome;
+    registro.quantidadeAntes = quantidadeAntes;
+    registro.quantidadeAjustada = ajuste.quantidade;
+    registro.quantidadeDepois = produto.quantidade;
+    registro.tipo = ajuste.tipo;
+    registro.motivo = ajuste.motivo;
+    registro.dataHora = ObterDataHoraAtual();
+    SalvarAjusteRepositorio(registro);
+    return registro;
+}
+
+ValidarTipoAjuste(tipo){
+    if(tipo == null || tipo == "")
+        return false;
+    if(tipo != "perda" && tipo != "devolucao")
+        return false;
+    return true;
+}
+
+ValidarQuantidadeAjuste(quantidade){
+    if(quantidade == null)
+        return false;
+    if(quantidade <= 0)
+        return false;
+    return true;
+}
+
+ListarAjustesEstoque(produtoId){
+    if(produtoId == null)
+        return ListarTodosAjustesRepositorio();
+    return ListarAjustesPorProdutoRepositorio(produtoId);
+}

@@ -1,0 +1,12 @@
+// back/models/Alerta
+
+Alerta {
+    id;
+    produtoId;
+    nomeProduto;
+    quantidadeAtual;
+    estoqueMinimo;
+    tipo;
+    status;
+    dataHora;
+}
